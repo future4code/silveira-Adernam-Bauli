@@ -24,34 +24,38 @@ const jogar = () => {
    let pontuacaoPc = carta1Pc.valor + carta2Pc.valor;
 
    console.log("Jogador...: Cartas:", carta1.texto, carta2.texto, "--- Pontuação Jogador...:", pontuacaoJogador);
-   console.log("Computador: Cartas:", carta1Pc.texto, carta2Pc.texto, "--- Pontuação Computador:", pontuacaoPc)
+   console.log("Computador: Cartas:", carta1Pc.texto, carta2Pc.texto, "--- Pontuação Computador:", pontuacaoPc);
 
    if (pontuacaoJogador > pontuacaoPc) {
-      console.log("Parabéns, você venceu o computador!")
-      let confirm3 = confirm("Deseja jogar novamente ?")
+      console.log("Parabéns, você venceu o computador!");
+      let confirm3 = confirm("Deseja jogar novamente ?");
       if (confirm3) {
-         jogar()
+         jogar();
+      } else {
+         console.log("O jogo acabou.");
       }
    } else if (pontuacaoPc > pontuacaoJogador) {
-      console.log("O computador venceu :(")
-      let confirm2 = confirm("Deseja jogar novamente ?")
+      console.log("O computador venceu :(");
+      let confirm2 = confirm("Deseja jogar novamente ?");
       if (confirm2) {
-         jogar()
+         jogar();
+      } else {
+         console.log("O jogo acabou.");
       }
    } else if (pontuacaoJogador === pontuacaoPc) {
-      console.log("O jogo empatou.")
-      let confirm4 = confirm("Deseja jogar novamente ?")
+      console.log("O jogo empatou.");
+      let confirm4 = confirm("Deseja jogar novamente ?");
       if (confirm4) {
-         jogar()
-      }
-      
+         jogar();
+      } else {
+         console.log("O jogo acabou.");
+      }      
    }
 }
-
-const rodada = confirm("Deseja iniciar uma nova rodada ?")
+const rodada = confirm("Deseja iniciar uma nova rodada ?");
 
 if (rodada) {
-   jogar()
+   jogar();
 } else {
-   console.log("O jogo acabou.")
+   console.log("O jogo acabou.");
 }
