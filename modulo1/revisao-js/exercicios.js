@@ -11,7 +11,8 @@ function retornaTamanhoArray(array) {
 
 // EXERCÍCIO 02
 function retornaArrayInvertido(array) {
-  
+    array["Azul","Amarelo","Vermelho"];
+    return array.reverse();
 }
 
 // EXERCÍCIO 03
