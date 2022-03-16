@@ -234,21 +234,56 @@ const cadastroDesafio = () => {
 
 console.log(cadastroDesafio());
 
-// const loginDesafio = () => {
-//     //  Sua lógica aqui
-// }
-// console.log(loginDesafio());
+const loginDesafio = () => {
+    const senhaDigitada = prompt("Digite sua senha:")
+    let mensagem;
+    for(let pessoa of usuarios){
+    if (senhaDigitada == pessoa.senha) {
+            mensagem = "Usuário Logado."
+            return mensagem;
+        }
+    }
+    if(mensagem === undefined){
+        console.log("Senha inválida")
+    }
+}
+console.log(loginDesafio())
 
-// const primeiraDoseDesafio = () => {
-// //  Sua lógica aqui
-// }
-// console.log(primeiraDoseDesafio())
+const primeiraDoseDesafio = () => {
+    let vacina = prompt("Qual vacina você tomou ?")
+    let imunizacao = "incompleta"
+    usuarios[usuarios.length-1] = {
+        ...usuarios[usuarios.length-1],
+        vacina: vacina,
+        imunizacao: imunizacao
+    }
+    return usuarios
+}
+console.log(primeiraDoseDesafio())
+
 // const segundaDoseDesafio = (nomeDoUsuario) => {
-//     //  Sua lógica aqui
+//     for(let pessoa of usuarios){
+//         if(nomeDoUsuario == pessoa.nome){
+//             pessoa.imunizacao = "completa"
+//         }
+//     }
+//     return usuarios
 // }
-// console.log(segundaDoseDesafio("ALGUM NOME AQUI"));
+// console.log(segundaDoseDesafio("Carlos"));
 
 // const avisoAosAtrasadosDesafio = () => {
-//     //  Sua lógica aqui
+//     const usuarios = [
+//         { nome: "Artur", imunizacao: "incompleta" },
+//         { nome: "Barbara", imunizacao: "completa" },
+//         { nome: "Carlos", imunizacao: "incompleta" }
+//     ]
+//     const vacinaIncompleta = usuarios.filter((pessoa)=>{
+//         return pessoa.imunizacao === "incompleta"
+//     })
+
+//     const mensagemIncompleta = vacinaIncompleta.map((pessoa)=>{
+//         return `Olá ${pessoa.nome} você precisa voltar ao posto para tomar a segunda dose!`
+//     })
+//     return mensagemIncompleta
 // }
 // console.log(avisoAosAtrasadosDesafio());
