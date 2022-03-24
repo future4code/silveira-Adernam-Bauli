@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Post from './components/Post/Post';
 import Post2 from './components/Post/Post2';
 import Post3 from './components/Post/Post3';
-import PostNovo from './components/Post/PostNovo';
 
 const MainContainer = styled.div`
   display: flex;
