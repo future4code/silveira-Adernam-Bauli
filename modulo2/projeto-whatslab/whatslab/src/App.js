@@ -1,15 +1,21 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
+// import MessageItem from './components/MessageItem';
 
 
 class App extends React.Component {
 
   state = {
     chat: [
-      {usuario: "Adernam", mensagem: "Olá tudo bem"}
+      { usuario: "Adernam", mensagem: "Olá tudo bem", hora: "19:00" }
     ],
     valorInputUsuario: "",
     valorInputMensagem: "",
+    // date: new Date(),
+    // hour: date.getHours(),
+    // minutes: date.getMinutes(),
+    // seconds: date.getSeconds(),
+    // hourAndMinutes: `${hour}: ${minutes}: ${seconds}`;
   }
 
   adicionaMensagem = () => {
@@ -39,34 +45,48 @@ class App extends React.Component {
   };
 
   render() {
+
+    let date = new Date();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let hourAndMinutes = `${hour}:${minutes}`
+
     const chatMensagens = this.state.chat.map((msg) => {
       return (
-        <p>
-          {msg.usuario}: {msg.mensagem}
-        </p>
+        <div className="MessageItem">
+            <p className="MessageText">{msg.usuario}: {msg.mensagem}</p>
+            <p className="MessageHour">{hourAndMinutes}</p>
+        </div>
       );
-    });
+  });
+
+
     return (
       <div className="App">
-        <div className="DivChat">
-          <div>{chatMensagens}</div>
+        <div className="container">
+
+          <div className="divChat">
+            {chatMensagens}
+          </div>
+
+          <div className="Form">
+            <input
+              className="Nome"
+              value={this.state.valorInputUsuario}
+              onChange={this.onChangeInputUsuario}
+              placeholder={"Usuário"}
+            />
+            <input
+              value={this.state.valorInputMensagem}
+              onChange={this.onChangeInputMensagem}
+              className="Mensagem"
+              placeholder={"Digite uma mensagem"}
+            />
+            <button onClick={this.adicionaMensagem}>Enviar</button>
+          </div>
         </div>
-        <div className="Form">
-         <input
-            className="Nome"
-            value={this.state.valorInputUsuario}
-            onChange={this.onChangeInputUsuario}
-            placeholder={"Usuário"}
-         />
-         <input
-            value={this.state.valorInputMensagem}
-            onChange={this.onChangeInputMensagem}
-            className="Mensagem"
-            placeholder={"Mensagem"}
-         />
-         <button onClick={this.adicionaMensagem}>Enviar</button>
-        </div>
-     </div>
+      </div>
     );
   };
 

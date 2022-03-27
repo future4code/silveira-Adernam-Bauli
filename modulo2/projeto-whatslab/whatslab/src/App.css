@@ -2,46 +2,99 @@
   background-color: rgb(204, 199, 252);
 }
 
-.App{
-  border: 1px solid black;
+.App {
   height: 100vh;
-  width: 40%;
-  margin: 0 30%;
-  display: grid;
-  grid-template: column;
-  grid-template-rows: 96.5fr 3.5fr;
-  align-items: flex-end;
+  display: flex;
+  justify-content: center;
 }
 
-.DivChat{
-  width: 100wh;
-  padding: 0 3%;
-  margin: 10p;
+.container {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.divChat{
+  background-color: rgb(194, 194, 194);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.MessageItem{
+  background-color: gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  /* padding: 3px; */
+  width: fit-content;
+  margin: 0 3% 1% 2%;
+  padding: 10px;
+  gap: 5px;
+}
+
+.MessageText{
+  background-color: gray;
+  /* padding: 10% 5%; */
+  border-radius: 6px;
+  font-size: 15px;
+  width: 100%;
+  /* margin-right: 20px; */
+}
+
+.MessageHour{
+  background-color: gray;
+  font-size: 11px;
+  /* margin-right: 5px; */
+  text-align: right;
 }
 
 .Form{
+  background-color: rgb(194, 194, 194);
   display: flex;
+  width: 100%;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-around;
+  height: 28px;
+  gap: 3px;
 }
 
 .Nome{
+  background-color: #FFF;
+  border: none;
+  border-radius: 7px;
   font-size: 15px;
-  height: 25px;
-  width: 100px;
-  margin: 2px 0;
+  height: 100%;
+  width: 15%;
 }
 
 .Mensagem{
+  background: rgb(255, 255, 255);
+  border: none;
+  border-radius: 7px;
   font-size: 15px;
-  height: 25px;
-  width: 564px;
-  margin: 2px 0;
+  font-weight: 400;
+  width: 75%;
+  height: 100%;
 }
 
-button{
-  height: 31px;
-  width: 80px;
-  margin: 2px 0;
+.Nome::placeholder {
+  padding: 0px 5px;
 }
+
+.Mensagem::placeholder {
+  padding: 0px 5px;
+}
+
+
+button{
+  background-color: #FFF;
+  border: none;
+  border-radius: 7px;
+  width: 10%;
+  height: 100%;
+}
+
