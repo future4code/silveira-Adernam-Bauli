@@ -1,35 +1,43 @@
 import './App.css';
 import React, { useEffect } from 'react';
+import { getAllByPlaceholderText } from '@testing-library/react';
 // import MessageItem from './components/MessageItem';
 
 
 class App extends React.Component {
+  getFormatDate = () => {
+    const date = new Date();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return `${hour}:${minutes}:${seconds}`
+  }
 
   state = {
     chat: [
-      { usuario: "Adernam", mensagem: "Olá tudo bem", hora: "19:00" }
+      { usuario: "Adernam", mensagem: "Olá tudo bem", time: this.getFormatDate() }
     ],
     valorInputUsuario: "",
     valorInputMensagem: "",
-    // date: new Date(),
-    // hour: date.getHours(),
-    // minutes: date.getMinutes(),
-    // seconds: date.getSeconds(),
-    // hourAndMinutes: `${hour}: ${minutes}: ${seconds}`;
   }
 
-  adicionaMensagem = () => {
+  adicionaMensagem = (event) => {
+    event.preventDefault();
     const novaMensagem = {
       usuario: this.state.valorInputUsuario,
-      mensagem: this.state.valorInputMensagem
+      mensagem: this.state.valorInputMensagem,
+      time: this.getFormatDate()
     }
 
-    const novoChat = [...this.state.chat, novaMensagem]
+    this.state.chat.push(novaMensagem)
+    this.state.valorInputMensagem = "";
 
-    this.setState({
-      chat: novoChat,
-      valorInputMensagem: ""
-    })
+    this.setState({})
+
+    // this.setState({
+    //   valorInputMensagem: "",
+    // },
+
   }
 
   onChangeInputUsuario = (event) => {
@@ -44,33 +52,34 @@ class App extends React.Component {
     });
   };
 
-  render() {
 
-    let date = new Date();
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
-    let hourAndMinutes = `${hour}:${minutes}`
-
-    const chatMensagens = this.state.chat.map((msg) => {
+  chatMensagens = () => {
+    return this.state.chat.map((msg) => {
       return (
         <div className="MessageItem">
-            <p className="MessageText">{msg.usuario}: {msg.mensagem}</p>
-            <p className="MessageHour">{hourAndMinutes}</p>
+          <p className="MessageText">{msg.usuario}: {msg.mensagem}</p>
+          <p className="MessageHour">{msg.time}</p>
         </div>
       );
-  });
+    });
+  }
 
+  funcaoTeste = (event) => {
+    if (event.keyCode === 13 && this.state.mensagem) {
+      this.adicionaMensagem()
+      document.getElementById("Mensagem").focus();
+    }
+  }
+
+  render() {
 
     return (
       <div className="App">
-        <div className="container">
-
+        <div className="container" >
           <div className="divChat">
-            {chatMensagens}
+            {this.chatMensagens()}
           </div>
-
-          <div className="Form">
+          <form className="Form" onSubmit={this.adicionaMensagem}>
             <input
               className="Nome"
               value={this.state.valorInputUsuario}
@@ -78,13 +87,16 @@ class App extends React.Component {
               placeholder={"Usuário"}
             />
             <input
+              id="Mensagem"
+              className="Mensagem"
+              onKeyDown={this.funcaoTeste}
               value={this.state.valorInputMensagem}
               onChange={this.onChangeInputMensagem}
-              className="Mensagem"
               placeholder={"Digite uma mensagem"}
+              required
             />
-            <button onClick={this.adicionaMensagem}>Enviar</button>
-          </div>
+            <button type="submit">Enviar</button>
+          </form>
         </div>
       </div>
     );
