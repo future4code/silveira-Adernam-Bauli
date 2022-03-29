@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useEffect } from 'react';
 import { getAllByPlaceholderText } from '@testing-library/react';
-// import MessageItem from './components/MessageItem';
 
 
 class App extends React.Component {
