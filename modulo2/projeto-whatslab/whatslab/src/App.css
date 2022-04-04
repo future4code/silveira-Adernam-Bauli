@@ -1,0 +1,92 @@
+*{
+  background-color: rgb(204, 199, 252);
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background-color: rgb(194, 194, 194);
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.divChat{
+  background-color: rgb(194, 194, 194);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.MessageItem{
+  background-color: gray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 0 3% 1% 2%;
+  padding: 10px;
+  gap: 5px;
+}
+
+.MessageText{
+  background-color: gray;
+  border-radius: 6px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.MessageHour{
+  background-color: gray;
+  font-size: 11px;
+  text-align: right;
+}
+
+.Form{
+  background-color: rgb(194, 194, 194);
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 28px;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+
+.Nome{
+  background-color: #FFF;
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  height: 100%;
+  width: 15%;
+  padding-left: 8px;
+}
+
+.Mensagem{
+  padding-left: 5px;
+  background: rgb(255, 255, 255);
+  border: none;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 400;
+  width: 75%;
+  height: 100%;
+  padding-left: 8px;
+}
+
+
+button{
+  background-color: #FFF;
+  border: none;
+  border-radius: 7px;
+  width: 10%;
+  height: 100%;
+}
