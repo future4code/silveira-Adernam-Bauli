@@ -5,10 +5,22 @@ import Screen1 from './components/FirstScreen';
 import Screen2 from './components/SecondScreen';
 
 
-const AppDiv = styled.div`
-  padding: 8px;
+const DivDad = styled.div`
+  display: flex;
+  justify-content: center;
 `
 
+
+const DivApp = styled.div`
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+`
+
+const Btn = styled.button`
+  width: 98px;
+  margin: auto;
+`
 
 
 class App extends React.Component {
@@ -39,12 +51,20 @@ class App extends React.Component {
     }
   }
 
+  keyPress = (event) => {
+    if (event.keyCode === 13) {
+      this.criarCadastro()
+    }
+  }
+
   render() {
     return (
-      <AppDiv>
-        <button onClick={this.onClickButton}> Trocar de tela</button>
-        {this.showPage()}
-      </AppDiv>
+      <DivDad>
+        <DivApp>
+          <Btn onClick={this.onClickButton}> Trocar de tela</Btn>
+          {this.showPage()}
+        </DivApp>
+      </DivDad>
     );
   }
 }

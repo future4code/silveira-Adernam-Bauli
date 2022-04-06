@@ -47,7 +47,9 @@ class Screen1 extends React.Component {
     // }
 
 
-    postUser = () => {
+    postUser = (event) => {
+
+        event.preventDefault();
 
         const body = {
             name: this.state.inputName,
@@ -57,6 +59,7 @@ class Screen1 extends React.Component {
         axios
             .post(`${baseUrl}`, body, headers)
             .then((res) => {
+                console.log("Deu certo")
                 this.getAllUsers();
             })
             .catch((err) => {
@@ -66,48 +69,46 @@ class Screen1 extends React.Component {
         this.setState({
             inputName: "",
             inputEmail: "",
-        })
+        });
     };
 
 
     onChangeName = (event) => {
         this.setState({
             inputName: event.target.value
-        })
-    }
+        });
+    };
 
     onChangeEmail = (event) => {
         this.setState({
             inputEmail: event.target.value
-        })
-    }
+        });
+    };
 
-
+    funcaoTeste = (event) => {
+        if (event.keyCode === 13 && this.state.mensagem) {
+            this.postUser()
+            document.getElementById("Mail").focus();
+        };
+    };
 
 
     render() {
 
-        // const conmponentUsers = this.state.users.map((user) => {
-        //     return <li key={user.id}>{user.name}{user.email}</li>
-        // })
+
 
         return (
             <FirstDiv>
                 <div>
-                    <div>
-                        <input type="text" value={this.state.inputName} onChange={this.onChangeName} placeholder="Nome"></input>
-                        <input type="text" value={this.state.inputEmail} onChange={this.onChangeEmail} placeholder="E-mail"></input>
-                        <button onClick={this.postUser}>Criar Usuário</button>
-                    </div>
-                    <div>
-                        {/* {conmponentUsers} */}
-                    </div>
+                    <input type="text" value={this.state.inputName} onChange={this.onChangeName} placeholder="Nome"></input>
+                    <input id="Mail" className="Mail" type="text" value={this.state.inputEmail} onChange={this.onChangeEmail} placeholder="E-mail"></input>
+                    <button onClick={this.postUser}>Criar Usuário</button>
                 </div>
             </FirstDiv>
-        )
-    }
+        );
+    };
 
-}
+};
 
 
 
