@@ -21,7 +21,6 @@ export default class App extends React.Component {
 
   goToTracksPage = (id) => {
     this.setState({currentPage: "tracks", trackClicked: id})
-
   }
 
   goToPlaylistPage = () => {
