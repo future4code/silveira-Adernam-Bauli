@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 // import axios from "axios";
 
-const DivPrimaria = styled.div`
+const PrimaryDiv = styled.div`
     /* background-color: gray; */
     width: 100vw;
     height: 100vh;
     display: flex;
 `
 
-const DivPai = styled.div`
+const Div1 = styled.div`
     /* background-color: blue; */
     width: 300px;
     margin: auto;
     text-align: center;
     color: #708090;
+
+    h1{
+        font-weight: 700;
+    }
 `
 
 const DivBtn = styled.div`
@@ -31,24 +35,30 @@ const Btn = styled.button`
     height: 35px;
     border-radius: 20px;
     border: none;
+    font-size: 16px;
+
+    &:hover{
+        cursor: pointer;
+        background-color: #B6D4E3;
+    }
 `
 
-function HomePage() {
+function HomePage(props) {
 
 
 
 
     return (
-        <DivPrimaria>
-            <DivPai>
+        <PrimaryDiv>
+            <Div1>
                 <h1>LabeX</h1>
                 <DivBtn>
-                    <Btn>Ver viagens</Btn>
+                    <Btn onClick={() => props.setPage("Trips")}>Ver viagens</Btn>
                     <Btn>Área de Admin</Btn>
                 </DivBtn>
-            </DivPai>
+            </Div1>
 
-        </DivPrimaria>
+        </PrimaryDiv>
     )
 }
 
