@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-// import axios from "axios";
-
+import axios from "axios";
+import { useNavigate } from 'react-router-dom'
+import { goToPage } from "../routes/coordinator";
+import { getDefaultNormalizer } from "@testing-library/react";
 
 const FirstDiv = styled.div`
     /* background-color: gray; */
@@ -48,17 +50,49 @@ const H1 = styled.h1`
 `
 
 function ListTripsPage(props) {
+    const navigate = useNavigate()
+    const [tripsList, setTripsList] = useState([])
 
+    useEffect(() => {
+        getTrips();
+    }, [])
+
+    const getTrips = () => {
+        const url = `https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips`
+        axios.get(url)
+            .then((res) => {
+                console.log(res)
+                setTripsList(res.data.trips)
+            })
+            .catch((res) => {
+                console.log(res)
+            })
+    }
+
+    const tripsDetails = tripsList.map((detail) => {
+        return <ul key={detail.id}>
+            <li>
+                 <p>Nome:{detail.name}</p>
+                 <p>Descrição:{detail.description}</p>
+                 <p>Planeta:{detail.planet}</p>
+                 <p>Duração:{detail.durationInDays}Dias</p>
+                 <p>Data:{detail.date}</p>
+            </li>
+        </ul>
+    })
 
 
     return (
+
+
         <FirstDiv>
             <SecondDiv>
                 <DivBtn>
-                    <Btn onClick={() => props.setPage("Home")}>Voltar</Btn>
+                    <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
                     <Btn>Inscrever-se</Btn>
                 </DivBtn>
                 <H1>Lista de Viagens</H1>
+                {tripsDetails}
             </SecondDiv>
         </FirstDiv>
     )

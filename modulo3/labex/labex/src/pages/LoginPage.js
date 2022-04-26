@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 // import axios from "axios";
+import { useNavigate } from 'react-router-dom'
+import { goToPage } from "../routes/coordinator";
 
 
 const PrimaryDiv = styled.div`
@@ -61,6 +63,7 @@ const Btn = styled.button`
 
 
 function LoginPage() {
+    const navigate = useNavigate()
 
 
 
@@ -74,7 +77,7 @@ function LoginPage() {
                     <Input placeholder="Senha"/>
                 </DivInput>
                 <DivBtn>
-                    <Btn>Voltar</Btn>
+                    <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
                     <Btn>Entrar</Btn>
                 </DivBtn>
             </SecondDiv>

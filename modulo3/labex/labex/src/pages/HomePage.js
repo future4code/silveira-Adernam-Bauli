@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 // import axios from "axios";
+import { useNavigate } from 'react-router-dom'
+import { goToPage } from "../routes/coordinator";
 
 const PrimaryDiv = styled.div`
     /* background-color: gray; */
@@ -44,6 +46,7 @@ const Btn = styled.button`
 `
 
 function HomePage(props) {
+    const navigate = useNavigate()
 
 
 
@@ -53,12 +56,12 @@ function HomePage(props) {
             <Div1>
                 <h1>LabeX</h1>
                 <DivBtn>
-                    <Btn onClick={() => props.setPage("Trips")}>Ver viagens</Btn>
-                    <Btn>Área de Admin</Btn>
-                </DivBtn>
-            </Div1>
+                    <Btn onClick={() => goToPage(navigate, "trips")}>Ver viagens</Btn>
+                    <Btn onClick={() => goToPage(navigate, "login")}> Área de Admin</Btn>
+            </DivBtn>
+        </Div1>
 
-        </PrimaryDiv>
+        </PrimaryDiv >
     )
 }
 
