@@ -3,6 +3,7 @@ import styled from 'styled-components';
 // import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { goToPage } from "../routes/coordinator";
+import axios from "axios";
 
 
 const PrimaryDiv = styled.div`
@@ -64,19 +65,33 @@ const Btn = styled.button`
 
 function LoginPage() {
     const navigate = useNavigate();
-    const [email, setEmail] = useState=("");
-    const [password, setPassword] = useState=("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const onChangeEmail = (event) => {
-        setEmail=(event.target.value)
+        setEmail(event.target.value);
     }
 
     const onChangePassword = (event) => {
-        setPassword=(event.target.value)
+        setPassword(event.target.value);
     }
 
     const onSubmitLogin = () => {
         console.log(email, password)
+        const url = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/login"
+        const body = {
+            email: email,
+            password: password
+        }
+
+        axios.post(url, body)
+        .then((res) => {
+            console.log('Deu certo', res.data)
+            localStorage.setItem('token', res.data.token)
+            goToPage(navigate, "/tripsdetail")
+        }).catch((res) => {
+            console.log('Deu errado', res)
+        })
     }
 
 
@@ -86,7 +101,7 @@ function LoginPage() {
                 <h1>Login</h1>
                 <DivInput>
                     <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" />
-                    <Input value={password} onChange={onChangePassword} placeholder="Senha"/>
+                    <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha"/>
                 </DivInput>
                 <DivBtn>
                     <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>

@@ -77,6 +77,7 @@ const Span = styled.span`
 `
 
 const DivBtn = styled.div`
+    /* background-color: pink; */
     display: flex;
     justify-content: center;
     gap: 50px;
@@ -111,6 +112,7 @@ const Li = styled.li`
     width: 500px;
     box-shadow: rgb(0 0 0 / 30%) 0px 4px 8px 0px;
     padding: 8px 20px;
+    margin-bottom: 20px;
 `
 
 const P = styled.p`
