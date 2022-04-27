@@ -63,9 +63,21 @@ const Btn = styled.button`
 
 
 function LoginPage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [email, setEmail] = useState=("");
+    const [password, setPassword] = useState=("");
 
+    const onChangeEmail = (event) => {
+        setEmail=(event.target.value)
+    }
 
+    const onChangePassword = (event) => {
+        setPassword=(event.target.value)
+    }
+
+    const onSubmitLogin = () => {
+        console.log(email, password)
+    }
 
 
     return (
@@ -73,12 +85,12 @@ function LoginPage() {
             <SecondDiv>
                 <h1>Login</h1>
                 <DivInput>
-                    <Input type="email" placeholder="E-mail" />
-                    <Input placeholder="Senha"/>
+                    <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" />
+                    <Input value={password} onChange={onChangePassword} placeholder="Senha"/>
                 </DivInput>
                 <DivBtn>
                     <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
-                    <Btn>Entrar</Btn>
+                    <Btn onClick={onSubmitLogin}>Entrar</Btn>
                 </DivBtn>
             </SecondDiv>
         </PrimaryDiv>
