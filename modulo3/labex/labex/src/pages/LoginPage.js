@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 // import axios from "axios";
 import { useNavigate } from 'react-router-dom'
-import { goToPage } from "../routes/coordinator";
+import { goToPage, useProtectPage } from "../routes/coordinator";
 import axios from "axios";
 
 
@@ -26,7 +26,7 @@ const SecondDiv = styled.div`
 `
 
 
-const DivInput = styled.div`
+const FormInput = styled.form`
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -42,6 +42,7 @@ const Input = styled.input`
 
 const DivBtn = styled.div`
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-around;
 `
 
@@ -76,7 +77,8 @@ function LoginPage() {
         setPassword(event.target.value);
     }
 
-    const onSubmitLogin = () => {
+    const SubmitLogin = (event) => {
+        event.preventeDefault()
         console.log(email, password)
         const url = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/login"
         const body = {
@@ -85,28 +87,43 @@ function LoginPage() {
         }
 
         axios.post(url, body)
-        .then((res) => {
-            console.log('Deu certo', res.data)
-            localStorage.setItem('token', res.data.token)
-            goToPage(navigate, "/tripsdetail")
-        }).catch((res) => {
-            console.log('Deu errado', res)
-        })
+            .then((res) => {
+                console.log('Deu certo', res.data)
+                localStorage.setItem('token', res.data.token)
+                goToPage(navigate, "/tripsdetail")
+            }).catch((res) => {
+                console.log('Deu errado', res)
+            })
     }
 
+
+    const adminArea = () => {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                goToPage(navigate, '/homeadmin')
+            }
+        
+    }
+
+    useEffect(() => {
+        adminArea();
+    }, [])
 
     return (
         <PrimaryDiv>
             <SecondDiv>
                 <h1>Login</h1>
-                <DivInput>
-                    <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" />
-                    <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha"/>
-                </DivInput>
-                <DivBtn>
-                    <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
-                    <Btn onClick={onSubmitLogin}>Entrar</Btn>
-                </DivBtn>
+                <FormInput onSubmit={SubmitLogin}>
+                    {/* <form> */}
+                    <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" required />
+                    <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha" required />
+                    {/* </form> */}
+                    <DivBtn>
+                        <Btn onClick={() => goToPage(navigate, "/homeadmin")}>Entrar</Btn>
+                        <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
+                    </DivBtn>
+                </FormInput>
             </SecondDiv>
         </PrimaryDiv>
     )

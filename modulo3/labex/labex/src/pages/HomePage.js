@@ -3,8 +3,12 @@ import styled from 'styled-components';
 // import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { goToPage } from "../routes/coordinator";
+import Wallpapper from '../img/wallpapper.jpg'
 
 const PrimaryDiv = styled.div`
+    background-image: url(${Wallpapper});
+    background-repeat: no-repeat;
+    background-size: cover;
     /* background-color: gray; */
     width: 100vw;
     height: 100vh;
@@ -17,10 +21,22 @@ const Div1 = styled.div`
     margin: auto;
     text-align: center;
     color: #708090;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h1{
         font-weight: 700;
+        margin: 0;
+        color: white;
     }
+`
+
+const P = styled.p`
+    @import url('https://fonts.googleapis.com/css2?family=Square+Peg&display=swap');
+    font-family: 'Square Peg', cursive;
+    width: 400px;
+    color: white;
 `
 
 const DivBtn = styled.div`
@@ -28,6 +44,7 @@ const DivBtn = styled.div`
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin-top: 10px;
 `
 
 const Btn = styled.button`
@@ -45,7 +62,7 @@ const Btn = styled.button`
     }
 `
 
-function HomePage(props) {
+function HomePage() {
     const navigate = useNavigate()
 
 
@@ -55,6 +72,7 @@ function HomePage(props) {
         <PrimaryDiv>
             <Div1>
                 <h1>LabeX</h1>
+                <P>Explore the stars and discover new territories</P>
                 <DivBtn>
                     <Btn onClick={() => goToPage(navigate, "trips")}>Ver viagens</Btn>
                     <Btn onClick={() => goToPage(navigate, "login")}> Área de Admin</Btn>
