@@ -60,6 +60,10 @@ const Li = styled.li`
     align-items: center;
     /* justify-content: space-around; */
 
+    &:hover{
+        cursor: pointer;
+    }
+
     p{
         color: black;
         margin-left: 20px;
@@ -92,7 +96,6 @@ function AdminHomePage() {
         const url = `https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips`
         axios.get(url)
             .then((res) => {
-                console.log(res)
                 setTripsList(res.data.trips)
             })
             .catch((res) => {
@@ -100,10 +103,14 @@ function AdminHomePage() {
             })
     }
 
+    const rendDetail = (id) => {
+        goToPage(navigate, `/tripsdetails/${id}`)
+    }
 
-    const tripsDetails = tripsList.map((detail) => {
+
+    const tripsDetails = tripsList && tripsList.map((detail) => {
         return <ul key={detail.id}>
-            <Li>
+            <Li onClick={() => rendDetail(detail.id)}>
                  <p>{detail.name}</p>
                  <img src={Lixeira}/>
             </Li>

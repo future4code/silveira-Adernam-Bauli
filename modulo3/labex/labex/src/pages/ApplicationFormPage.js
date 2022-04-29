@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { goToPage } from "../routes/coordinator";
+import { countries } from 'country-list-json'
+import useForm from '../hooks/useForm.js'
 
 
 const FirstDiv = styled.div`
@@ -16,7 +18,7 @@ const FirstDiv = styled.div`
 
 const SecondDiv = styled.div`
     /* background-color: yellow; */
-    width: 600px;
+    width: 540px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -52,8 +54,11 @@ const Input = styled.input`
 `
 
 const DivBtn = styled.div`
-    width: 500px;
+    /* background-color: green; */
+    /* width: 100%; */
+    padding-left: 20px;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-around;
     gap: 20px;
 `
@@ -79,6 +84,7 @@ function ApplicationFormPage() {
     const navigate = useNavigate()
     const [tripsList, setTripsList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const { form, onChange } = useForm({ name: "", age: "", applicationText: "", profession: "", country: "", trip: "" })
 
     useEffect(() => {
         getTrips();
@@ -96,11 +102,35 @@ function ApplicationFormPage() {
             .catch((res) => {
                 setIsLoading(false)
                 console.log(res)
+                alert("Ops, algo deu errado.")
+            })
+    }
+
+    const applyToTrip = (id) => {
+        const url = `https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips/${id}/apply`
+        const body = form
+        const headers = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        axios.post(url, headers, body)
+            .then((res) => {
+                alert("Inscrição registrada!")
+                console.log(res)
+            }).catch((res) => {
+                alert("Houve um erro.")
+                console.log(res)
             })
     }
 
     const tripsDetails = tripsList.map((detail) => {
-        return <option>{detail.name}</option>
+        return <option key={detail.id} value={detail.name}>{detail.name}</option>
+    })
+
+    const countryList = countries.map((country) => {
+        return <option key={country.id} value={countries.name}>{country.name}</option>
     })
 
     return (
@@ -108,20 +138,21 @@ function ApplicationFormPage() {
             <SecondDiv>
                 <H1>Inscreva-se para uma viagem</H1>
                 <DivForm>
-                    <Select>
+                    <Select name={tripsList.name} onChange={onChange} onSubmit={() => applyToTrip(form.trip)}>
                         {tripsDetails}
                     </Select>
-                    <Input placeholder="Nome" />
-                    <Input placeholder="Idade" />
-                    <Input placeholder="Texto de Candidatura" />
-                    <Input placeholder="Profissão" />
-                    <Select>
+                    <Input name="name" value={form.name} onChange={onChange} placeholder="Nome" />
+                    <Input name="age" value={form.age} onChange={onChange} placeholder="Idade" />
+                    <Input name="applicationText" value={form.applicationText} onChange={onChange} placeholder="Texto de Candidatura" />
+                    <Input name="profession" value={form.profession} onChange={onChange} placeholder="Profissão" />
+                    <Select name="country" value={form.country} onChange={onChange}>
                         <option>Escolha um País</option>
+                        {countryList}
                     </Select>
                 </DivForm>
                 <DivBtn>
+                    <Btn onClick={() => applyToTrip(form.trip)}>Enviar</Btn>
                     <Btn onClick={() => goToPage(navigate, "/trips")}>Voltar</Btn>
-                    <Btn>Enviar</Btn>
                 </DivBtn>
             </SecondDiv>
         </FirstDiv>

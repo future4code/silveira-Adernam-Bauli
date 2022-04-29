@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Router } from './routes/Router'
 
 
+
 const DivApp = styled.div`
   /* background-color: gray; */
   width: 100vw;

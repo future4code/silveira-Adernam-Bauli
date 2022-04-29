@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'
 import { goToPage, useProtectPage } from "../routes/coordinator";
 import axios from "axios";
+import useForm from '../hooks/useForm.js'
 
 
 const PrimaryDiv = styled.div`
@@ -26,7 +27,7 @@ const SecondDiv = styled.div`
 `
 
 
-const FormInput = styled.form`
+const DivForm = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -78,7 +79,6 @@ function LoginPage() {
     }
 
     const SubmitLogin = (event) => {
-        event.preventeDefault()
         console.log(email, password)
         const url = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/login"
         const body = {
@@ -88,9 +88,9 @@ function LoginPage() {
 
         axios.post(url, body)
             .then((res) => {
-                console.log('Deu certo', res.data)
+                console.log('Deu certo', res)
                 localStorage.setItem('token', res.data.token)
-                goToPage(navigate, "/tripsdetail")
+                goToPage(navigate, "/homeadmin")
             }).catch((res) => {
                 console.log('Deu errado', res)
             })
@@ -114,16 +114,14 @@ function LoginPage() {
         <PrimaryDiv>
             <SecondDiv>
                 <h1>Login</h1>
-                <FormInput onSubmit={SubmitLogin}>
-                    {/* <form> */}
+                <DivForm>
                     <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" required />
                     <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha" required />
-                    {/* </form> */}
                     <DivBtn>
-                        <Btn onClick={() => goToPage(navigate, "/homeadmin")}>Entrar</Btn>
+                        <Btn onClick={SubmitLogin}>Entrar</Btn>
                         <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
                     </DivBtn>
-                </FormInput>
+                </DivForm>
             </SecondDiv>
         </PrimaryDiv>
     )

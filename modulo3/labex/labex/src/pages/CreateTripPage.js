@@ -81,18 +81,20 @@ function CreateTripPage() {
     const addTrip = () => {
         const url = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips"
         const body = form
-        const headers ={
+        const headers = {
+            headers: {
             "Content-Type": "application/json",
             "auth": localStorage.getItem("token")
+            }
         }
 
-        axios.post(url, headers, body)
+        axios.post(url, body, headers)
         .then((res) => {
             alert("Viagem registrada!")
             console.log(res)
         }).catch((res) => {
             alert("Houve um erro.")
-            console.log(res)
+            console.log(res.response.data)
         })
     }
 
@@ -107,12 +109,12 @@ function CreateTripPage() {
                     <Select name="planet" value={form.planet} onChange={onChange}>
                         <option value="" selected disabled hidden required >Escolha um planeta</option>
                         <option value="Júpiter">Júpiter</option>
-                        {/* <option name="planet" value={form.marte} onChange={onChange} >Marte</option>
-                        <option name="planet" value={form.mercurio} onChange={onChange} >Mercúrio</option>
-                        <option name="planet" value={form.netuno} onChange={onChange} >Netuno</option>
-                        <option name="planet" value={form.saturno} onChange={onChange} >Saturno</option>
-                        <option name="planet" value={form.urano} onChange={onChange} >Urano</option>
-                        <option name="planet" value={form.venus} onChange={onChange} >Vênus</option> */}
+                        <option value="Marte" onChange={onChange} >Marte</option>
+                        <option value="Mercúrio" onChange={onChange} >Mercúrio</option>
+                        <option value="Netuno" onChange={onChange} >Netuno</option>
+                        <option value="Saturno" onChange={onChange} >Saturno</option>
+                        <option value="Urano" onChange={onChange} >Urano</option>
+                        <option value="Vênus" onChange={onChange} >Vênus</option>
                     </Select>
                     <Input name="date" value={form.date} onChange={onChange} type="date" min={new Date().toISOString().slice(0, 10)} required />
                     <Input name="description" type="text" value={form.description} onChange={onChange} pattern={"{30,}"} title={"Descrição deve ter 30 letras ou mais"} placeholder="Descrição" required />
