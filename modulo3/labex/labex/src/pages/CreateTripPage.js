@@ -35,17 +35,54 @@ const DivForm = styled.div`
 `
 
 const Select = styled.select`
+    background-color: transparent;
     height: 35px;
+    width: 500px;
     border-radius: 10px;
     border: solid black 1px;
     padding: 0 10px;
+    border: none;
+`
+
+const DivInput = styled.div`
+    /* background-color: green; */
+    height: 40px;
+    border-bottom: 2px solid black;
+    border
+
+    &:focus{
+        border: none;
+        outline: none;
+        color: white;
+    }
 `
 
 const Input = styled.input`
-    height: 35px;
+    /* height: 35px;
     border-radius: 10px;
     border: solid black 1px;
+    padding: 0 10px; */
+    background-color: transparent;
+    height: 35px;
+    width: 500px;
+    /* border-radius: 10px; */
+    /* border: solid black 1px; */
     padding: 0 10px;
+    border: none;
+    color: black;
+    font-weight: 600;
+
+    &::placeholder{
+        color: black;
+        font-weight: 600;
+    }
+
+    &:focus{
+        border: none;
+        outline: none;
+        color: black;
+        font-weight: 600;
+    }
 `
 
 const DivBtn = styled.div`
@@ -76,49 +113,59 @@ const Btn = styled.button`
 function CreateTripPage() {
     const navigate = useNavigate();
     useProtectPage();
-    const { form, onChange } = useForm({name: "", planet: "", date: "", description: "", durationInDays: ""})
+    const { form, onChange } = useForm({ name: "", planet: "", date: "", description: "", durationInDays: "" })
 
     const addTrip = () => {
         const url = "https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips"
         const body = form
         const headers = {
             headers: {
-            "Content-Type": "application/json",
-            "auth": localStorage.getItem("token")
+                "Content-Type": "application/json",
+                "auth": localStorage.getItem("token")
             }
         }
 
         axios.post(url, body, headers)
-        .then((res) => {
-            alert("Viagem registrada!")
-            console.log(res)
-        }).catch((res) => {
-            alert("Houve um erro.")
-            console.log(res.response.data)
-        })
+            .then((res) => {
+                alert("Viagem registrada!")
+                console.log(res)
+            }).catch((res) => {
+                alert("Houve um erro.")
+                console.log(res.response.data)
+            })
     }
 
-    
+
 
     return (
         <PrimaryDiv>
             <SecondDiv>
                 <h1>Criar Viagem</h1>
                 <DivForm>
-                    <Input name="name" type="text" value={form.name} onChange={onChange} pattern={"{5,}"} title={"Nome deve ter 5 letras ou mais"} placeholder="Nome" required/>
-                    <Select name="planet" value={form.planet} onChange={onChange}>
-                        <option value="" selected disabled hidden required >Escolha um planeta</option>
-                        <option value="Júpiter">Júpiter</option>
-                        <option value="Marte" onChange={onChange} >Marte</option>
-                        <option value="Mercúrio" onChange={onChange} >Mercúrio</option>
-                        <option value="Netuno" onChange={onChange} >Netuno</option>
-                        <option value="Saturno" onChange={onChange} >Saturno</option>
-                        <option value="Urano" onChange={onChange} >Urano</option>
-                        <option value="Vênus" onChange={onChange} >Vênus</option>
-                    </Select>
-                    <Input name="date" value={form.date} onChange={onChange} type="date" min={new Date().toISOString().slice(0, 10)} required />
-                    <Input name="description" type="text" value={form.description} onChange={onChange} pattern={"{30,}"} title={"Descrição deve ter 30 letras ou mais"} placeholder="Descrição" required />
-                    <Input name="durationInDays" value={form.durationInDays} onChange={onChange} pattern={"{50,}"} title={"Deve ser mais que 50 dias"} type="number" placeholder="Duração em dias" required />
+                    <DivInput>
+                        <Input name="name" type="text" value={form.name} onChange={onChange} pattern={"^.{5,}"} title={"Nome deve ter 5 letras ou mais"} placeholder="Nome" required />
+                    </DivInput>
+                    <DivInput>
+                        <Select name="planet" value={form.planet} onChange={onChange}>
+                            <option value="" selected disabled hidden required >Escolha um planeta</option>
+                            <option value="Júpiter">Júpiter</option>
+                            <option value="Marte" onChange={onChange} >Marte</option>
+                            <option value="Mercúrio" onChange={onChange} >Mercúrio</option>
+                            <option value="Netuno" onChange={onChange} >Netuno</option>
+                            <option value="Saturno" onChange={onChange} >Saturno</option>
+                            <option value="Urano" onChange={onChange} >Urano</option>
+                            <option value="Vênus" onChange={onChange} >Vênus</option>
+                        </Select>
+                    </DivInput>
+                    <DivInput>
+                        <Input name="date" value={form.date} onChange={onChange} type="date" min={new Date().toISOString().slice(0, 10)} required />
+                    </DivInput>
+                    <DivInput>
+                        <Input name="description" type="text" value={form.description} onChange={onChange} pattern={"^.{30,}"} title={"Descrição deve ter 30 letras ou mais"} placeholder="Descrição" required />
+                    </DivInput>
+                    <DivInput>
+                        <Input name="durationInDays" value={form.durationInDays} onChange={onChange} min={50} title={"Deve ser mais que 50 dias"} type="number" placeholder="Duração em dias" required />
+                    </DivInput>
                     <DivBtn>
                         <Btn onClick={addTrip}>Criar</Btn>
                         <Btn onClick={() => goToPage(navigate, "/homeadmin")}>Voltar</Btn>

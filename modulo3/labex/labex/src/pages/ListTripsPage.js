@@ -24,7 +24,7 @@ const RingAnimation = keyframes`
 
 const FirstDiv = styled.div`
     /* background-color: gray; */
-    width: 100vw;
+    width: 99vw;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -44,8 +44,6 @@ const Center = styled.div`
     text-align: center;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    /* background-color: gray; */
 `
 
 const Ring = styled.div`
@@ -108,6 +106,9 @@ const H1 = styled.h1`
 `
 
 const Li = styled.li`
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur( 5px );
+    /* -webkit-backdrop-filter: blur( 5px ); */
     list-style-type: none;
     width: 500px;
     box-shadow: rgb(0 0 0 / 30%) 0px 4px 8px 0px;
@@ -116,12 +117,19 @@ const Li = styled.li`
 `
 
 const P = styled.p`
+    /* background-color: yellow; */
+    text-align: start;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 `
 
 const Strong = styled.strong`
-    color: #708090;
+    /* background-color: lightgreen; */
+    /* color: #708090; */
+    color: black;
     margin-right: 5px;
+    width: auto;
 `
 
 function ListTripsPage(props) {
@@ -166,10 +174,10 @@ function ListTripsPage(props) {
 
         <FirstDiv>
             <SecondDiv>
-                {isLoading && <Center>
+                {/* {isLoading && <Center>
                     <Ring></Ring>
                     <Span>Carregando...</Span>
-                </Center>}
+                </Center>} */}
                 <DivBtn>
                     <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
                     <Btn onClick={() => goToPage(navigate, "/application")}>Inscrever-se</Btn>

@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage'
 import ListTripsPage from './pages/ListTripsPage'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { Router } from './routes/Router'
-
+import Wallpapper from './img/wallpapper.jpg'
 
 
 const DivApp = styled.div`
@@ -13,29 +13,31 @@ const DivApp = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+
+  img{
+    /* background-image: url(${Wallpapper}); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    /* opacity: 50%; */
+  }
+`
+const Div = styled.div`
+  position: absolute;
 `
 
 function App() {
-  const [page, setPage] = useState("Home")
 
-
-  // const choosePage = (pag) => {
-  //   setPage(pag)
-  // }
-
-
-  // switch (page) {
-  //   case 'Home':
-  //     return <HomePage/>
-  //   case 'Login':
-  //     return <LoginPage/>
-  //   case 'Trips':
-  //     return <ListTripsPage/>
-  // }
 
   return (
     <DivApp>
-      <Router/>
+        <img src={Wallpapper}></img>
+      <Div>
+        <Router />
+      </Div>
     </DivApp>
   );
 }

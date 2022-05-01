@@ -49,6 +49,8 @@ const Btn = styled.button`
 `
 
 const Li = styled.li`
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur( 5px );
     list-style-type: none;
     text-align: left;
     width: 500px;
@@ -59,26 +61,46 @@ const Li = styled.li`
     display: flex;
     align-items: center;
     /* justify-content: space-around; */
-
-    &:hover{
-        cursor: pointer;
-    }
+    position: relative;
 
     p{
         color: black;
         margin-left: 20px;
+        font-weight: 600;
+        position: relative;
+        
+        &:hover{
+        cursor: pointer;
+        position: relative;
+        }
     }
 
     img{
         width: 35px;
         height: 35px;
-        position: absolute;
         margin-left: 450px;
+        position: absolute;
 
         &:hover{
             transform: scale(1.1);
             transition: 0.2s linear;
+            cursor: pointer;
         }
+    }
+`
+
+const Del = styled.button`
+    background-color: transparent;
+    border: none;
+    width: 35px;
+    height: 35px;
+    margin-left: 420px;
+    position: absolute;
+
+    &:hover{
+        transform: scale(1.1);
+        transition: 0.2s linear;
+        cursor: pointer;
     }
 `
 
@@ -92,8 +114,10 @@ function AdminHomePage() {
         getTrips();
     }, [])
 
+
     const getTrips = () => {
         const url = `https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips`
+
         axios.get(url)
             .then((res) => {
                 setTripsList(res.data.trips)
@@ -103,16 +127,40 @@ function AdminHomePage() {
             })
     }
 
+    const deleteTrip = (id) => {
+        const headers = {
+            headers: {
+                auth: localStorage.getItem('token')
+            }
+        }
+        axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/adernam-silveira/trips/${id}`, headers)
+            .then((res) => {
+                alert('Viagem deletada com sucesso!')
+                console.log(res)
+                getTrips();
+            }).catch((err) => {
+                alert('Não foi possível deletar sua viagem!')
+            })
+    }
+
     const rendDetail = (id) => {
         goToPage(navigate, `/tripsdetails/${id}`)
+    }
+
+    const logout = () => {
+        localStorage.setItem('token', "")
+        goToPage(navigate, "/login")
     }
 
 
     const tripsDetails = tripsList && tripsList.map((detail) => {
         return <ul key={detail.id}>
-            <Li onClick={() => rendDetail(detail.id)}>
-                 <p>{detail.name}</p>
-                 <img src={Lixeira}/>
+            <Li>
+                <p onClick={() => rendDetail(detail.id)}>{detail.name}</p>
+
+                {/* Eu havia feito um botão com imagem de uma lixeira mas ele buga o tamanho quando recarrega a página. */}
+                {/* <img src={Lixeira} onClick={() => deleteTrip(detail.id)} /> */}
+                <Del onClick={() => deleteTrip(detail.id)}>Excluir</Del>
             </Li>
         </ul>
     })
@@ -124,7 +172,7 @@ function AdminHomePage() {
                 <DivBtn>
                     <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>
                     <Btn onClick={() => goToPage(navigate, "/createtrip")}>Criar Viagem</Btn>
-                    <Btn>Logout</Btn>
+                    <Btn onClick={logout}>Logout</Btn>
                 </DivBtn>
                 {tripsDetails}
             </SecondDiv>

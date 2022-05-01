@@ -34,11 +34,31 @@ const DivForm = styled.div`
     padding: 0 20px;
 `
 
+const DivInput = styled.div`
+    /* background-color: green; */
+    height: 40px;
+    border-bottom: 2px solid black;
+    border
+`
+
 const Input = styled.input`
+    background-color: transparent;
     height: 35px;
-    border-radius: 10px;
-    border: solid black 1px;
+    width: 500px;
+    /* border-radius: 10px; */
+    /* border: solid black 1px; */
     padding: 0 10px;
+    border: none;
+    color: white;
+
+    &::placeholder{
+        color: black;
+    }
+    &:focus{
+        border: none;
+        outline: none;
+        color: white;
+    }
 `
 
 const DivBtn = styled.div`
@@ -88,22 +108,22 @@ function LoginPage() {
 
         axios.post(url, body)
             .then((res) => {
-                console.log('Deu certo', res)
                 localStorage.setItem('token', res.data.token)
                 goToPage(navigate, "/homeadmin")
             }).catch((res) => {
-                console.log('Deu errado', res)
+                alert("Email ou senha inválido, tente novamente.")
+                console.log(res)
             })
     }
 
 
     const adminArea = () => {
-            const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
 
-            if (token) {
-                goToPage(navigate, '/homeadmin')
-            }
-        
+        if (token) {
+            goToPage(navigate, '/homeadmin')
+        }
+
     }
 
     useEffect(() => {
@@ -115,8 +135,12 @@ function LoginPage() {
             <SecondDiv>
                 <h1>Login</h1>
                 <DivForm>
-                    <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" required />
-                    <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha" required />
+                    <DivInput>
+                        <Input type="email" value={email} onChange={onChangeEmail} placeholder="E-mail" required />
+                    </DivInput>
+                    <DivInput>
+                        <Input type="password" value={password} onChange={onChangePassword} placeholder="Senha" required />
+                    </DivInput>
                     <DivBtn>
                         <Btn onClick={SubmitLogin}>Entrar</Btn>
                         <Btn onClick={() => goToPage(navigate, "/")}>Voltar</Btn>

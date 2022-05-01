@@ -6,9 +6,9 @@ import { goToPage } from "../routes/coordinator";
 import Wallpapper from '../img/wallpapper.jpg'
 
 const PrimaryDiv = styled.div`
-    background-image: url(${Wallpapper});
-    background-repeat: no-repeat;
-    background-size: cover;
+    /* background-image: url(${Wallpapper}); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
     /* background-color: gray; */
     width: 100vw;
     height: 100vh;
