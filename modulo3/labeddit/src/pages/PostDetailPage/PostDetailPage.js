@@ -5,18 +5,27 @@ import { BASE_URL } from "../../constants/urls";
 import useProtectedPage from "../../hooks/useProtectedPage";
 import useRequestData from "../../hooks/useRequestData";
 import GlobalStateContext from "../../context/GlobalStateContext";
+import {DivCard} from './styled'
 
 const PostDetailPage = () => {
     useProtectedPage();
     const params = useParams();
     const { states } = useContext(GlobalStateContext);
-    // const post = useRequestData({}, `${BASE_URL}/posts/${params.id}/comments`)
 
+    // const detailMap = states.currentPost.map((post) => {
+    //     return (
+    //         <PostCard
+    //             key={post.id}
+    //         />
+    //     )
+
+    // })
+    console.log(states.currentPost)
     return (
-        <div>
-            <h1>{states.currentPost.title}</h1>
+        <DivCard>
             <PostCard post={states.currentPost}/>
-        </div>
+            {/* {detailMap} */}
+        </DivCard>
     )
 }
 

@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { PostCardContainer, DivBottom } from './styled';
+import React, { useContext, useState } from 'react';
+import { PostCardContainer, DivBottom, Votes } from './styled';
 import GlobalStateContext from "../../context/GlobalStateContext";
+import ArrowUp from '../../assets/arrowup.png';
+import ArrowDown from '../../assets/arrowdown.png';
 
 const RecipeCard = (props) => {
   const { states } = useContext(GlobalStateContext);
-  const [buttonComments, setButtonComment] = useState(states.currentPage == "posts" ? <p onClick={props.onClick}>Comments: {props.post.commentCount}</p> : <div></div>)
 
 
 
@@ -13,8 +14,12 @@ const RecipeCard = (props) => {
       <p>Enviado por: {props.post.username}</p>
       <h2>{props.post.title}</h2>
       <DivBottom>
-        <p>Likes Count: {props.post.voteSum}</p>
-        {buttonComments}
+        <Votes>
+          <img src={ArrowUp} onClick={props.clickUp} />
+          {props.post.voteSum}
+          <img src={ArrowDown} onClick={props.clickDown} />
+          </Votes>
+          <p onClick={props.onClickComment}>Comments: {props.post.commentCount}</p>
       </DivBottom>
     </PostCardContainer>
   )

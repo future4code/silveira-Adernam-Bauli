@@ -4,7 +4,7 @@ import GlobalStateContext from './GlobalStateContext';
 
 const GlobalState = (props) => {
     const [currentPost, setCurrentPost] = useState({});
-    const [currentPage, setCurrentPage] = useState("");
+    const [currentPage, setCurrentPage] = useState("posts");
     
 
     const states = { currentPost, currentPage }
