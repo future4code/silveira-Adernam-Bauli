@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import PostCard from '../../components/PostCard/PostCard';
 import useProtectedPage from '../../hooks/useProtectedPage';
-import useRequestData from "../../hooks/useRequestData"
+import useRequestData from "../../hooks/useRequestData";
 import { BASE_URL } from '../../constants/urls';
 import { RecipeListContainer, PostBox, DivPost, PostContainer, ButtonPost, InputTitle } from './styled';
 import { useNavigate } from "react-router-dom";
 import GlobalStateContext from "../../context/GlobalStateContext";
 import useForm from '../../hooks/useForm';
 import { createPost } from '../../services/posts';
+import { votePost } from '../../services/vote';
 import axios from "axios";
 
 
@@ -25,26 +26,26 @@ const PostsListpage = () => {
         setters.setCurrentPage("detail")
     }
 
-    const votePost = (vote, id) => {
-        const URL = `${BASE_URL}/posts/${id}/votes`;
-        const body = {
-            direction: vote,
-        };
-        const headers = {
-            headers: {
-                Authorization: localStorage.getItem("token"),
-            },
-        };
-        axios
-            .post(URL, body, headers)
-            .then((res) => {
-                getPosts();
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    // const votePost = (vote, id) => {
+    //     const URL = `${BASE_URL}/posts/${id}/votes`;
+    //     const body = {
+    //         direction: vote,
+    //     };
+    //     const headers = {
+    //         headers: {
+    //             Authorization: localStorage.getItem("token"),
+    //         },
+    //     };
+    //     axios
+    //         .post(URL, body, headers)
+    //         .then((res) => {
+    //             getPosts();
+    //             console.log(res);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // };
 
 
     const postsCards = posts && posts.map((post) => {
@@ -53,8 +54,8 @@ const PostsListpage = () => {
                 key={post.id}
                 post={post}
                 onClickComment={() => goToDetail(post)}
-                clickUp={() => votePost(1, post.id)}
-                clickDown={() => votePost(-1, post.id)}
+                clickUp={() => votePost(1, post.id, getPosts)}
+                clickDown={() => votePost(-1, post.id, getPosts)}
             />
         )
 

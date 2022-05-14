@@ -27,7 +27,7 @@ export const PostContainer = styled.div`
 export const InputTitle = styled.input`
   background-color: lightgray;
   width: 277px;
-  height: 25px;
+  height: 28px;
   padding: 0 10px;
   border-radius: 5px;
   border: none;

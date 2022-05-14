@@ -12,7 +12,6 @@ const SignUpPage = ({setRightButtonText}) => {
         <ScreenContainer>
             <LogoImage src={Logo}/>
             <SignUpForm setRightButtonText={setRightButtonText} />
-            <h1>SignUpPage</h1>
         </ScreenContainer>
     )
 }
