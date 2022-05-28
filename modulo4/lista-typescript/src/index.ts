@@ -146,3 +146,62 @@
 
 // 7-
 
+// type Produto = {
+//     nome: string,
+//     quantidade: number,
+//     valorUnitario: any
+// }
+
+
+// const arrayProdutos: Produto[] = [
+//     { nome: "MacMugffin", quantidade: 37, valorUnitario: 51.040 },
+//     { nome: "Vassoura voadora", quantidade: 56, valorUnitario: 210.0 },
+//     { nome: "Laço da verdade", quantidade: 32, valorUnitario: 571.5 },
+//     { nome: "O precioso", quantidade: 1, valorUnitario: 9181.923 },
+//     { nome: "Caneta de 250 cores", quantidade: 123, valorUnitario: 17 },
+//     { nome: "Plumbus", quantidade: 13, valorUnitario: 140.44 },
+//     { nome: "Pokebola", quantidade: 200, valorUnitario: 99.9915 }
+// ]
+
+
+
+// function precoAjustado(produtos: Produto[]) {
+//     const ajustaPreco = (preco: number): string => {
+//         const valorAjustado: string = preco.toFixed(2).replace('.', ',')
+//         return "R$ " + valorAjustado
+//     }
+
+//     const novoPreco = arrayProdutos.map((prod) => {
+//         prod.valorUnitario = ajustaPreco(prod.valorUnitario)
+
+//         return prod
+//     })
+
+//     return novoPreco
+// }
+
+// console.log(precoAjustado(arrayProdutos))
+
+// function fatorial (num:any) {
+//     let fator:number = num
+//     let atual:number = 0;
+//     for(let i = fator; i > 0; i-- ) {
+//         let anterior = fator - 1
+//         atual = fator * anterior
+        // if (i > 0) {
+        //     atual = i * (i-1)
+        // }
+    //     return i
+    // }
+    // while (fator > 0) {
+    //     let anterior = fator - 1
+    //     atual = fator * anterior
+    // }
+//     console.log(atual)
+// }
+
+// fatorial(3)
+
+// 10-
+
+// 11-
