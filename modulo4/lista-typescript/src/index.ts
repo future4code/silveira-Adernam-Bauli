@@ -182,7 +182,8 @@
 
 // console.log(precoAjustado(arrayProdutos))
 
-// function fatorial (num:any) {
+
+// function fatorial (num:any):number {
 //     const numerosMenores = []
 
 //     for(let i = num; i > 1; i-- ) {
@@ -190,12 +191,20 @@
 //     }
 
 //     const total = numerosMenores.reduce((prev, current) => prev * current )
-//     console.log(total)
+//     return total;
 // }
 
-// fatorial(5)
+// function anagram (word:string):void {
+//     let anagrama = fatorial(word.length);
+//     console.log(`A quantidade de anagramas da palavra ${word} é: ${anagrama}`)
+// }
+
+// anagram("mesa")
 
 // 10-
 
 // 11-
+
+
+
 
