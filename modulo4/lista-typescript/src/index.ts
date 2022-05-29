@@ -183,25 +183,19 @@
 // console.log(precoAjustado(arrayProdutos))
 
 // function fatorial (num:any) {
-//     let fator:number = num
-//     let atual:number = 0;
-//     for(let i = fator; i > 0; i-- ) {
-//         let anterior = fator - 1
-//         atual = fator * anterior
-        // if (i > 0) {
-        //     atual = i * (i-1)
-        // }
-    //     return i
-    // }
-    // while (fator > 0) {
-    //     let anterior = fator - 1
-    //     atual = fator * anterior
-    // }
-//     console.log(atual)
+//     const numerosMenores = []
+
+//     for(let i = num; i > 1; i-- ) {
+//         numerosMenores.push(i)
+//     }
+
+//     const total = numerosMenores.reduce((prev, current) => prev * current )
+//     console.log(total)
 // }
 
-// fatorial(3)
+// fatorial(5)
 
 // 10-
 
 // 11-
+
