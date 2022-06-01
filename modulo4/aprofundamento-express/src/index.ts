@@ -160,7 +160,7 @@ const arrayToDo: toDo[] = [
 ]
 
 app.get("/todos", (req, res) => {
-  res.send(arrayToDo)
+  res.status(200).send(arrayToDo)
 })
 
 
@@ -180,18 +180,12 @@ app.post("/todos", (req, res) => {
 
   arrayToDo.push(newToDo)
 
-  res.status(201).send("Deu certo")
+  res.status(200).send("Deu certo")
 })
 
 
 app.put("todos/:id", (req, res) => {
   const id = Number(req.params.id);
-
-  // const applyChange = arrayToDo.filter((filter) => {
-  //   if (filter.id === id) {
-  //     filter.completed !== filter.completed
-  //   }
-  // })
 
   for (let todo of arrayToDo) {
     if (id === todo.id) {
@@ -200,3 +194,36 @@ app.put("todos/:id", (req, res) => {
   }
   res.status(200).send("Deu certo")
 })
+
+
+app.delete("/todos/:id", (req, res) => {
+  const id = Number(req.params.id)
+
+  const newArrayToDo = arrayToDo.filter((toDo) => {
+    if (id !== toDo.id) {
+      return toDo;
+    }
+  })
+
+  res.status(200).send(newArrayToDo)
+})
+
+
+app.get("/todos/:userId", (req, res) => {
+  const userId = Number(req.params.userId)
+
+  const userToDo = arrayToDo.filter((toDo) => {
+    if (userId === toDo.userId) {
+      return toDo
+    }
+  })
+
+  const othersToDo = arrayToDo.filter((toDo) => {
+    if (userId !== toDo.userId) {
+      return toDo
+    }
+  })
+
+  res.status(200).send({ arrayToDo: { selectedUser: userToDo, others: othersToDo } })
+})
+
