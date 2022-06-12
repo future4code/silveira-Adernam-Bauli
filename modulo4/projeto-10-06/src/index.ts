@@ -3,240 +3,139 @@ import app from "./app";
 import connection from "./connection";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 1)
-// a) Não muda nada na resposta, só muda o jeito de fazer.
-
-app.get('/actor', async (req: Request, res: Response) => {
+app.get('/todousers/all', async (req: Request, res: Response) => {
     try {
-        // const result = await connection.raw(`select id, name from Actor`)
-        const result = await connection(`Actor`)
-            .select(`*`)
+        const result = await connection(`to_do_list_users`)
+            .select("id", "nick")
         res.send(result);
     } catch (error) {
         console.log(error);
-        res.status(400).send("Erro")
+        res.status(400).send("An error has occurred.")
     }
 })
 
-// b)
-
-app.get('/actor/querygender', async (req: Request, res: Response) => {
+app.get('/todousers/:id', async (req: Request, res: Response) => {
     try {
-        const result = await connection(`Actor`)
-            .count(`*`)
+        const result = await connection(`to_do_list_users`)
+            .select("id", "nick")
             .where({
-                gender: req.query.gender
-            })
-        console.log(result);
-        res.send(result[0]);
-    } catch (error) {
-        console.log(error);
-        res.status(400).send("Erro");
-    }
-})
-
-app.get('/actor/:name', async (req: Request, res: Response) => {
-    try {
-        const result = await connection(`Actor`)
-            .select(`*`)
-            .where({
-                name: req.params.name
+                id: req.params.id
             })
         res.send(result);
     } catch (error) {
         console.log(error);
-        res.status(400).send("Erro");
+        res.status(400).send("User not found.")
     }
 })
 
-// c)
-
-app.get('/actor/count/:gender', async (req: Request, res: Response) => {
+app.post("/todousers", async (req, res) => {
     try {
-        const result = await connection(`Actor`)
-            .count(`*`)
-            .where({
-                gender: req.params.gender
-            })
-        // console.log(result[0].contagem)
-        res.send(result[0])
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
+        const { name, nick, email } = req.body
 
-
-
-
-// 2)
-// a)
-
-app.put("/actor/:id", async (req: Request, res: Response) => {
-    try {
-        await connection(`Actor`)
-            .update({
-                salary: req.body.salary
-            })
-            .where({ id: req.params.id })
-        res.send(`Actor ${req.params.id} updated successfully!`)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
-
-// b)
-
-
-
-
-app.delete('/actor/:id', async (req: Request, res: Response) => {
-    try {
-        const deletedRows = await connection(`Actor`)
-            .delete()
-            .where({
-                id: req.params.id
-            })
-
-        if (deletedRows === 0) {
-            throw new Error()
-        }
-
-        res.send('Actor deleted.')
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
-
-// c)
-
-app.get('/actor/gender/avg', async (req: Request, res: Response) => {
-    try {
-        const genderAvg = await connection(`Actor`)
-            .avg("salary as average")
-            .where({
-                gender: req.body.gender
-            })
-
-        res.send(genderAvg)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
-
-// 3)
-// a)
-
-app.get('/actor/id/:id', async (req: Request, res: Response) => {
-    try {
-        const result = await connection(`Actor`)
-            .select(`*`)
-            .where({
-                id: req.params.id
-            })
-        res.send(result)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
-
-
-
-
-
-// 4)
-// a)
-
-app.put("/salarychange/actor", async (req: Request, res: Response) => {
-    try {
-        await connection(`Actor`)
-            .update({
-                salary: req.body.salary
-            })
-            .where({ id: req.body.id })
-        res.send(`Actor updated successfully!`)
-    } catch (error) {
-        console.log(error)
-        res.status(400).send("Erro")
-    }
-})
-
-
-
-app.post("/actor", async (req, res) => {
-    try {
-        const { name, genreFilm, salary } = req.body
-
-        type Actor = {
+        type User = {
             name: string,
-            genre_film: "love" | "action",
-            salary: number
+            nick: string,
+            email: string
         }
 
-        const actor: Actor = {
-            name, genre_film: genreFilm, salary
+        if (typeof name !== "string" || typeof nick !== "string" || typeof email !== "string") {
+            throw new Error();
         }
 
-        if (actor.genre_film !== "love" && actor.genre_film !== "action") {
-            throw new Error()
+        const user: User = {
+            name,
+            nick,
+            email
         }
 
-        await connection(`actor`).insert(actor)
+        await connection(`to_do_list_users`).insert(user)
 
-        // await connection.raw(`
-        //     INSERT INTO actor (name, genre_film, salary)
-        //     VALUE (
-        //     "${actor.name}", 
-        //     "${actor.genreFilm}" ,
-        //      ${actor.salary});
-        // `)
-        res.status(201).send("Created")
+        res.status(201).send("User created successfully.")
     } catch (error: any) {
         console.log(error.sqlMessage || error.message)
-        res.status(400).send("Erro")
+        res.status(400).send("An error has occurred.")
     }
 })
 
+app.put("/todousers/edit/:id", async (req: Request, res: Response) => {
+    try {
+        const { name, nick } = req.body;
+
+        if (!name || !nick) {
+            throw new Error();
+        }
+
+        await connection(`to_do_list_users`)
+            .update({
+                name,
+                nick
+            })
+            .where({ id: req.params.id })
+
+        res.send(`${nick} updated successfully!`)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send("An error has occurred.")
+    }
+})
+
+app.post("/todolist", async (req, res) => {
+    try {
+        const { title, description, limitDate, creatorUserId } = req.body;
+        const requiredFields = ["title", "description", "limitDate", "creatorUserId"];
+        const [day, month, year] = limitDate.split("/");
+        const splitedLimitDate: Date = new Date(`${year}-${month}-${day}`);
+
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                throw new Error(`Field ${field} is required.`);
+            }
+            if (typeof req.body[field] !== "string") {
+                throw new Error(`Field ${field} must be string.`);
+            }
+        }
+
+        type Task = {
+            title: string,
+            description: string,
+            limitDate: Date,
+            creatorUserId: string
+        }
+
+        const task: Task = {
+            title,
+            description,
+            limitDate: splitedLimitDate,
+            creatorUserId
+        }
+
+        await connection(`to_do_list`).insert(task)
+
+        res.status(201).send("Task created successfully.")
+    } catch (error: any) {
+        console.log(error.sqlMessage || error.message)
+        res.status(400).send(error.message)
+    }
+})
+
+app.get('/todolist/:id', async (req: Request, res: Response) => {
+    try {
+        const result = await connection(`to_do_list`)
+            .select(
+                "to_do_list.task_id",
+                "to_do_list.title",
+                "to_do_list.description",
+                "to_do_list.limitDate",
+                "to_do_list.status",
+                "to_do_list.creatorUserId",
+                "to_do_list_users.nick")
+            .join('to_do_list_users', 'to_do_list.task_id', 'to_do_list_users.id')
+            .where({
+                task_id: req.params.id
+            })
+        res.send(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).send("Task not found.");
+    }
+})
