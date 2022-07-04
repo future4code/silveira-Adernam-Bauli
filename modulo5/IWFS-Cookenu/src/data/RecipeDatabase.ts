@@ -47,12 +47,6 @@ export class RecipeDatabase extends BaseDatabase {
         try {
             const recipes = await BaseDatabase.connection(recipeTableName)
                 .select(
-                    // "id",
-                    // "title",
-                    // "description",
-                    // "createdAt",
-                    // "userId",
-                    // "userName"
                     '*'
                 );
 

@@ -32,7 +32,7 @@ export class Recipe {
             data.id,
             data.title,
             data.description,
-            data.created.at,
+            data.createdAt,
             data.userId,
             data.userName);
     };
