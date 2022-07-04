@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { UserDatabase } from '../data/UserDatabase';
-import { Authenticator } from '../services/Authenticator';
-import { HashManager } from '../services/HashManager';
+import { UserDatabase } from '../../data/UserDatabase';
+import { Authenticator } from '../../services/Authenticator';
+import { HashManager } from '../../services/HashManager';
 
 
 export async function login(req: Request, res: Response) {
@@ -31,6 +31,7 @@ export async function login(req: Request, res: Response) {
 
         res.status(200).send({ message: 'Usuário Logado com sucesso!', token })
     } catch (error) {
-        res.status(400).send(error.message)
+        console.log(error.message)
+        throw new Error(error.sqlMessage || error.message)
     }
 }

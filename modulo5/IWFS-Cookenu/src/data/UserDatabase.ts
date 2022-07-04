@@ -1,10 +1,12 @@
 import { User } from "../entities/User";
 import { BaseDatabase } from "./BaseDatabase"
 
+const usersTableName = 'Users'
+
 export class UserDatabase extends BaseDatabase {
     public async createUser(user: User): Promise<void> {
         try {
-            await BaseDatabase.connection('Users')
+            await BaseDatabase.connection(usersTableName)
                 .insert({
                     id: user.getId(),
                     name: user.getName(),
@@ -20,10 +22,10 @@ export class UserDatabase extends BaseDatabase {
 
     public async findUserById(id: string): Promise<User> {
         try {
-            const user = await BaseDatabase.connection('Users')
+            const user = await BaseDatabase.connection(usersTableName)
                 .select('*')
                 .where({ id });
-            return user[0] && User.toUserModel1(user[0]);
+            return user[0] && User.toUserModel(user[0]);
         } catch (error) {
             throw new Error(error.sqlMessage || error.message)
         }
@@ -31,10 +33,10 @@ export class UserDatabase extends BaseDatabase {
 
     public async findUserByEmail(email: string): Promise<User> {
         try {
-            const user = await BaseDatabase.connection('Users')
+            const user = await BaseDatabase.connection(usersTableName)
                 .select('*')
                 .where({ email });
-            return user[0] && User.toUserModel1(user[0]);
+            return user[0] && User.toUserModel(user[0]);
         } catch (error) {
             throw new Error(error.sqlMessage || error.message)
         }
@@ -42,17 +44,17 @@ export class UserDatabase extends BaseDatabase {
 
     public async getAllUsers(): Promise<User[]> {
         try {
-            const users = await BaseDatabase.connection('Users').select(
-                "id",
-                "name",
-                "email",
-                "role"
-            );
+            const users = await BaseDatabase.connection(usersTableName)
+                .select(
+                    "id",
+                    "name",
+                    "email",
+                    "role"
+                );
 
-            return users.map((user => User.toUserModel1(user)))
+            return users.map((user => User.toUserModel(user)))
         } catch (error) {
             throw new Error(error.sqlMessage || error.message)
         }
-
     }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UserDatabase } from "../data/UserDatabase";
-import { Authenticator } from "../services/Authenticator";
+import { UserDatabase } from "../../data/UserDatabase";
+import { Authenticator } from "../../services/Authenticator";
 
 
 export async function getAllCharacters(req: Request, res: Response) {

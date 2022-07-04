@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UserDatabase } from "../data/UserDatabase";
-import { Authenticator } from "../services/Authenticator";
+import { UserDatabase } from "../../data/UserDatabase";
+import { Authenticator } from "../../services/Authenticator";
 
 
 export async function getUser(req: Request, res: Response) {
@@ -26,6 +26,7 @@ export async function getUser(req: Request, res: Response) {
         res.status(200).send(userToShow);
 
     } catch (error) {
-        res.status(400).send(error.message);
+        console.log(error.message)
+        throw new Error(error.sqlMessage || error.message);
     };
 };

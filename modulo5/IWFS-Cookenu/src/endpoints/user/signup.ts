@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { UserDatabase } from '../data/UserDatabase';
-import { User } from '../entities/User';
-import { Authenticator } from '../services/Authenticator';
-import { HashManager } from '../services/HashManager';
-import { IdGenerator } from '../services/idgenerator';
+import { UserDatabase } from '../../data/UserDatabase';
+import { User } from '../../entities/User';
+import { Authenticator } from '../../services/Authenticator';
+import { HashManager } from '../../services/HashManager';
+import { IdGenerator } from '../../services/idgenerator';
 
 
 export async function signup(req: Request, res: Response) {
@@ -34,8 +34,9 @@ export async function signup(req: Request, res: Response) {
         const authenticator = new Authenticator()
         const token = authenticator.generate({ id, role })
 
-        res.status(200).send({ message: 'Usuário criado com sucesso!', token })
+        res.status(201).send({ message: 'Usuário criado com sucesso!', token })
     } catch (error) {
-        res.status(400).send(error.message)
+        console.log(error.message)
+        throw new Error(error.sqlMessage || error.message)
     }
 }
