@@ -6,12 +6,11 @@ import { InputPostDTO } from "../types/inputPost";
 import Post from "../model/Post";
 
 
-export default class postLogic {
+export default class PostBusiness {
 
     constructor(
         private postData: PostData,
         private idGenerator: IdGenerator,
-        private hashManager: HashManager,
         private authenticator: Authenticator
     ) { }
 
@@ -32,13 +31,15 @@ export default class postLogic {
       const author = this.authenticator.getTokenData(authorization);
       const id = this.idGenerator.generateId();
 
+      const date = new Date();
+
       const newPost = new Post (
         id,
         photo,
         description,
         type,
-        createdAt: new Date(),
-        authorId: author.id,
+        date,
+        author.id,
       );
 
       await this.postData.insert(newPost);

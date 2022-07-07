@@ -40,6 +40,7 @@ export default class UserBusiness {
             email,
             hashedPassword,
         )
+        
         await this.userData.insert(user)
 
         const token: string = this.authenticator.generateToken({ id })

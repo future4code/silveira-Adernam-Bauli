@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
-import _PostLogic from "../logic/postLogic";
-import Post from "../model/Post";
+import PostBusiness from "../business/PostBusiness";
 import { CreatePostDTO } from "../types/createPostDTO";
 
-const PostLogic = new _PostLogic();
 
 export default class PostController {
     constructor(
@@ -13,7 +11,7 @@ export default class PostController {
     getPostById = async (req: Request, res: Response): Promise<void> => {
         try {
             const id = req.params.id as string;
-            const post = await PostLogic.getPostByIdLogic(id);
+            const post = await this.postBusiness.getPostByIdLogic(id);
 
             res.status(200).send(post);
         } catch (error: any) {
@@ -37,7 +35,7 @@ export default class PostController {
                 throw new Error("Por favor insira um token.")
             }
 
-            const idPost = await PostLogic.createPostLogic(
+            const idPost = await this.postBusiness.createPost(
                 inputPostDTO,
                 authorization
             );

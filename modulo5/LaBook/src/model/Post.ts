@@ -5,6 +5,6 @@ export default class Post {
         private description: string,
         private type: string,
         private createdAt: Date,
-        private authorId: string
+        private author_id: string
     ) { }
 }
