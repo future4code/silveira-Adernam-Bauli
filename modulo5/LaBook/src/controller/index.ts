@@ -10,16 +10,7 @@ import PostController from "./PostController";
 import PostBusiness from "../business/PostBusiness";
 import PostData from "../data/PostData";
 
-const userBusiness = new UserBusiness(
-    new UserData(),
-    new IdGenerator(),
-    new HashManager(),
-    new Authenticator()
-)
 
-const userController = new UserController(
-    userBusiness
-);
 
 const userRoute = express.Router();
 
@@ -34,7 +25,7 @@ const postController = new PostController(
 );
 
 
-app.post("/user/signup", userController.signup)
-app.post("/user/login", userController.login)
+
 
 app.post('/post/create', postController.createPost)
+app.get('/post/get/:id', postController.getPostById)

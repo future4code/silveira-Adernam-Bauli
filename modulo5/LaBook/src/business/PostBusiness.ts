@@ -8,15 +8,15 @@ import Post from "../model/Post";
 
 export default class PostBusiness {
 
-    constructor(
-        private postData: PostData,
-        private idGenerator: IdGenerator,
-        private authenticator: Authenticator
-    ) { }
+  constructor(
+    private postData: PostData,
+    private idGenerator: IdGenerator,
+    private authenticator: Authenticator
+  ) { }
 
   createPost = async (input: InputPostDTO, authorization: string): Promise<string> => {
     try {
-        const { photo, description, type } = input;
+      const { photo, description, type } = input;
       if (
         !photo ||
         !description ||
@@ -33,7 +33,7 @@ export default class PostBusiness {
 
       const date = new Date();
 
-      const newPost = new Post (
+      const newPost = new Post(
         id,
         photo,
         description,
@@ -50,10 +50,10 @@ export default class PostBusiness {
     }
   };
 
-  getPostByIdLogic = async (id: string): Promise<Post> => {
+  getPostById = async (id: string): Promise<Post> => {
     try {
       if (!id) {
-        throw new Error("Insira um id.");
+        throw new Error("Insira um id.")
       }
 
       const post: Post = await this.postData.getPostById(id);

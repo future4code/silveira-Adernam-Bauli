@@ -10,12 +10,17 @@ export default class PostController {
 
     getPostById = async (req: Request, res: Response): Promise<void> => {
         try {
-            const id = req.params.id as string;
-            const post = await this.postBusiness.getPostByIdLogic(id);
+            const id = req.params.id;
+
+            if (!id) {
+                throw new Error("Insira um id.")
+            }
+
+            const post = await this.postBusiness.getPostById(id);
 
             res.status(200).send(post);
         } catch (error: any) {
-            res.status(400).send(error.message);
+            res.status(400).send({ message: error.message });
         }
     };
 
@@ -23,15 +28,15 @@ export default class PostController {
         const { photo, description, type } = req.body;
 
         const inputPostDTO: CreatePostDTO = {
-            photo: req.body.photo,
-            description: req.body.description,
-            type: req.body.type,
+            photo,
+            description,
+            type,
         }
 
         try {
             const authorization: string = req.headers.authorization as string;
 
-            if(!authorization) {
+            if (!authorization) {
                 throw new Error("Por favor insira um token.")
             }
 
