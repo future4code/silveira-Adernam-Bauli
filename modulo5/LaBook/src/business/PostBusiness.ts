@@ -52,13 +52,14 @@ export default class PostBusiness {
 
   getPostById = async (id: string): Promise<Post> => {
     try {
-      if (!id) {
+      if (!id || id === ":id") {
         throw new Error("Insira um id.")
       }
 
       const post: Post = await this.postData.getPostById(id);
 
       return post;
+      
     } catch (error: any) {
       throw new Error(error.message);
     }

@@ -10,17 +10,13 @@ export default class PostController {
 
     getPostById = async (req: Request, res: Response): Promise<void> => {
         try {
-            const id = req.params.id;
-
-            if (!id) {
-                throw new Error("Insira um id.")
-            }
+            const { id } = req.params;
 
             const post = await this.postBusiness.getPostById(id);
 
             res.status(200).send(post);
         } catch (error: any) {
-            res.status(400).send({ message: error.message });
+            res.status(400).send(error.message);
         }
     };
 
@@ -51,3 +47,4 @@ export default class PostController {
         }
     };
 }
+

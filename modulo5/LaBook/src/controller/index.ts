@@ -24,8 +24,18 @@ const postController = new PostController(
     postBusiness
 );
 
+const userBusiness = new UserBusiness(
+    new UserData(),
+    new IdGenerator(),
+    new HashManager(),
+    new Authenticator()
+)
 
+const userController = new UserController(
+    userBusiness
+);
 
 
 app.post('/post/create', postController.createPost)
+app.post('/user/login', userController.login)
 app.get('/post/get/:id', postController.getPostById)
