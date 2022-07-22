@@ -1,9 +1,9 @@
-import User from "../model/User"
+import User from "../model/Athlete"
 import { FindByEmailResponse } from "../types/findByEmailResponse"
 import { BaseDatabase } from "./BaseDatabase"
 
-export default class UserData extends BaseDatabase {
-    protected TABLE_NAME = "labook_users"
+export default class AthleteData extends BaseDatabase {
+    protected TABLE_NAME = "jogos_olimpicos_athletes"
 
     insert = async (user: User) => {
         try {
@@ -19,15 +19,15 @@ export default class UserData extends BaseDatabase {
         }
     }
 
-    findByEmail = async (email: string) => {
+    findByName = async (name: string) => {
         try {
             const queryResult: FindByEmailResponse = await this
                 .connection(this.TABLE_NAME)
                 .select()
-                .where({ email })
+                .where({ name })
 
             if (!queryResult) {
-                throw new Error("Invalid username or password");
+                throw new Error("Nome invalido.");
             }
 
             return queryResult[0]
@@ -40,4 +40,20 @@ export default class UserData extends BaseDatabase {
         }
     }
 
+    findCompetition = async (competition: string) => {
+        try {
+            const result = await this
+            .connection('jogos_olimpicos_competicao')
+            .select()
+            .where({ name: competition })
+
+            return result;
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(error.message)
+            } else {
+                throw new Error("Erro do banco !")
+            }
+        }
+    }
 }

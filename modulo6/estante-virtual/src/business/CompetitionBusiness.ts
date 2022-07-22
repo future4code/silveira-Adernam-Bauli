@@ -1,18 +1,20 @@
-import PostData from "../data/CompetitionData";
 import { IdGenerator } from "../services/IdGenerator";
-import Post from "../model/Post";
-import { CreateCompetitionDTO } from "../types/createPostDTO";
+import Post from "../model/Competition";
+import { CreateCompetitionDTO } from "../types/createCompetitionDTO";
+import Competition from "../model/Competition";
+import CompetitionData from "../data/CompetitionData";
 
 
 export default class CompetitionBusiness {
 
   constructor(
-    private competitionData: PostData,
+    private competitionData: CompetitionData,
     private idGenerator: IdGenerator
   ) { }
 
   createPost = async (input: CreateCompetitionDTO): Promise<string> => {
     const { name } = input;
+
     try {
       if (!input) {
         throw new Error("Insira um nome para a competição.");
@@ -22,7 +24,7 @@ export default class CompetitionBusiness {
 
       const date = new Date();
 
-      const newCompetition = new Post(
+      const newCompetition = new Competition(
         id,
         name,
         date

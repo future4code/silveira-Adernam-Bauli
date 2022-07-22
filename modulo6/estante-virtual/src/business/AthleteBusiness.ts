@@ -1,73 +1,50 @@
-import UserData from "../data/UserData";
-import User from "../model/User";
+import AthleteData from "../data/AthleteData";
+import Athlete from "../model/Athlete";
 import { Authenticator } from "../services/Authenticator";
-import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
-import { SignupInputDTO } from "../types/signupInputDTO";
-import { userLogin } from "../types/userLogin";
+import { CreateAthleteDTO } from "../types/createAthleteDTO";
 
-export default class UserBusiness {
+export default class AthleteBusiness {
 
     constructor(
-        private userData: UserData,
-        private idGenerator: IdGenerator,
-        private hashManager: HashManager,
-        private authenticator: Authenticator
+        private athleteData: AthleteData,
+        private idGenerator: IdGenerator
     ) { }
 
-    signup = async (input: SignupInputDTO) => {
+    create = async (input: CreateAthleteDTO) => {
 
-        const { name, email, password } = input
+        const { competition, name, value, unity } = input
         if (
-            !email ||
+            !competition ||
             !name ||
-            !password) {
-            throw new Error("Campos inválidos")
+            !value ||
+            !unity) {
+            throw new Error('Por favor cheque os campos.')
         }
 
-        const registeredUser = await this.userData.findByEmail(email)
+        const registeredUser = await this.athleteData.findByName(name)
         if (registeredUser) {
-            throw new Error("Email já cadastrado")
+            throw new Error('Atleta já cadastrado.')
+        }
+
+        const competitionAlreadyExist = await this.athleteData.findCompetition(competition)
+        
+        if(!competitionAlreadyExist.length) {
+            throw new Error('Competição não encontrada')
         }
 
         const id = this.idGenerator.generateId()
 
-        const hashedPassword = await this.hashManager.hash(password)
-
-        const user = new User(
+        const user = new Athlete(
             id,
             name,
-            email,
-            hashedPassword,
+            value,
+            unity,
+            competitionAlreadyExist[0].id
         )
         
-        await this.userData.insert(user)
+        await this.athleteData.insert(user)
 
-        const token: string = this.authenticator.generateToken({ id })
-
-        return token
+        return user;
     }
-
-    login = async (user: userLogin) => {
-
-        const { email, password } = user;
-
-        if (!email || !password) {
-            throw new Error('Preencha os campos "email" e "password"')
-        }
-
-        const logged = await new UserData().findByEmail(user.email);
-
-        const comparePass = await this.hashManager.compare(user.password, logged.password)
-
-        if (!comparePass) {
-            throw new Error('Credenciais inválidas')
-        }
-
-        const token: string = this.authenticator.generateToken({ id: logged.id })
-
-        return token;
-
-    }
-
 }

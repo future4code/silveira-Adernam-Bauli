@@ -1,4 +1,4 @@
-import Post from "../model/Post";
+import Post from "../model/Competition";
 import { BaseDatabase } from "./BaseDatabase";
 
 export default class CompetitionData extends BaseDatabase {
@@ -9,25 +9,31 @@ export default class CompetitionData extends BaseDatabase {
             await this
                 .connection(this.TABLE_NAME)
                 .insert(post);
-        } catch (error: any) {
-            throw new Error(error.message);
-        }
-    };
-
-    getPostById = async (id: string) => {
-        try {
-            const result = await this
-                .connection(this.TABLE_NAME)
-                .select()
-                .where({ id })
-
-            if (!result[0]) {
-                throw new Error("Competição não encontrada.");
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(error.message)
+            } else {
+                throw new Error("Erro do banco !")
             }
-
-            return result[0];
-        } catch (error: any) {
-            throw new Error(error.message);
         }
     };
+
+    getRanking = async (competitionId: string) => {
+        try {
+            const result = await this.connection.raw(`
+                SELECT name, value
+                FROM jogos_olimpicos_athletes
+                WHERE competition_id = "${competitionId}"
+                ORDER BY value DESC
+            `)
+
+            return result;
+        } catch (error) {
+            if (error instanceof Error) {
+                throw new Error(error.message)
+            } else {
+                throw new Error("Erro do banco !")
+            }
+        }
+    }
 }

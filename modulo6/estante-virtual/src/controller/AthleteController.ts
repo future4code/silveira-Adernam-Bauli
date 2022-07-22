@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import UserBusiness from "../business/AthleteBusiness";
-import { CreateAthleteDTO } from "../types/signupInputDTO";
+import { CreateAthleteDTO } from "../types/createAthleteDTO";
 
 export default class UserController{
     constructor(
-        private userBusiness: UserBusiness
+        private athleteBusiness: UserBusiness
     ){}
 
     createAthlete = async(req: Request, res: Response) =>{
@@ -18,8 +18,9 @@ export default class UserController{
         }
         
         try {
-            const token = await this.userBusiness.signup(input)
-            res.status(201).send({message: "Usuário cadastrado com sucesso", token})
+            const athlete = await this.athleteBusiness.create(input)
+
+            res.status(201).send({message: "Atleta cadastrado com sucesso", athlete})
         } catch (error) {
             if (error instanceof Error) {
                 return res.status(400).send(error.message)
@@ -27,17 +28,5 @@ export default class UserController{
             res.status(500).send("Erro no signup")
         }
     }
-
-    login = async (req: Request, res: Response) => {
-        try {
-          const { email, password } = req.body;
-    
-          const token: string = await this.userBusiness.login({email, password});
-    
-          res.status(200).send({ token });
-        } catch (error: any) {
-          res.status(400).send(error. sqlMessage || error.message);
-        }
-      };
 }
 
