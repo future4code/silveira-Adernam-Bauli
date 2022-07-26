@@ -13,13 +13,13 @@ export default class CompetitionRankingBusiness {
 
     try {
       if (!competitionName) {
-        throw new Error("Insira o nome de uma competição.");
+        throw new Error("Please check the fields!.");
       }
 
       const competitionAlreadyExist = await this.athleteData.findCompetition(competitionName)
         
         if(!competitionAlreadyExist.length) {
-            throw new Error('Competição não encontrada')
+            throw new Error('Competition not found.')
         }
 
       const ranking = await this.competitionData.getRanking(competitionAlreadyExist[0].id);

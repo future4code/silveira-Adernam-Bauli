@@ -13,7 +13,7 @@ export default class CompetitionData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Erro do banco !")
+                throw new Error("Database error!")
             }
         }
     };
@@ -32,7 +32,7 @@ export default class CompetitionData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Erro do banco !")
+                throw new Error("Database error!")
             }
         }
     }

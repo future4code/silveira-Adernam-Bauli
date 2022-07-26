@@ -20,12 +20,12 @@ export default class UserController{
         try {
             const athlete = await this.athleteBusiness.create(input)
 
-            res.status(201).send({message: "Atleta cadastrado com sucesso", athlete})
+            res.status(201).send({message: "Athlete created successfully", athlete})
         } catch (error) {
             if (error instanceof Error) {
                 return res.status(400).send(error.message)
             }
-            res.status(500).send("Erro no signup")
+            res.status(500).send("Signup error.")
         }
     }
 }

@@ -14,7 +14,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Erro do banco !")
+                throw new Error("Database error!")
             }
         }
     }
@@ -27,7 +27,7 @@ export default class AthleteData extends BaseDatabase {
                 .where({ name })
 
             if (!queryResult) {
-                throw new Error("Nome invalido.");
+                throw new Error("Invalid name.");
             }
 
             return queryResult[0]
@@ -35,7 +35,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Erro do banco !")
+                throw new Error("Database error!")
             }
         }
     }
@@ -52,7 +52,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Erro do banco !")
+                throw new Error("Database error!")
             }
         }
     }

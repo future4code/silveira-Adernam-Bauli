@@ -18,22 +18,10 @@ export default class CompetitionController {
         try {
             const competitionId = await this.competitionBusiness.createPost(inputCompetitionDTO);
 
-            res.status(200).send({ message: "Competição criada com sucesso!", competitionId });
+            res.status(200).send({ message: "Competition created successfully!", competitionId });
         } catch (error: any) {
             res.status(400).send(error.message);
         }
     };
-
-    getPostById = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const { id } = req.params;
-
-            const post = await this.competitionBusiness.getPostById(id);
-
-            res.status(200).send(post);
-        } catch (error: any) {
-            res.status(400).send(error.message);
-        }
-    };    
 }
 

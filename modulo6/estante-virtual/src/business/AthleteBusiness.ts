@@ -19,18 +19,18 @@ export default class AthleteBusiness {
             !name ||
             !value ||
             !unity) {
-            throw new Error('Por favor cheque os campos.')
+            throw new Error('Plese check the fields!.')
         }
 
         const registeredUser = await this.athleteData.findByName(name)
         if (registeredUser) {
-            throw new Error('Atleta já cadastrado.')
+            throw new Error('Athlete already registred.')
         }
 
         const competitionAlreadyExist = await this.athleteData.findCompetition(competition)
         
         if(!competitionAlreadyExist.length) {
-            throw new Error('Competição não encontrada')
+            throw new Error('Competition not found.')
         }
 
         const id = this.idGenerator.generateId()

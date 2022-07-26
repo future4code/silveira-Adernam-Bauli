@@ -13,9 +13,9 @@ export default class CompetitionRankingController {
         try {
             const ranking = await this.competitionRankingBusiness.getCompetitionRanking(competitionName);
 
-            res.status(200).send({ message: "Ranking da competição até o momento:", ranking });
+            res.status(200).send({ message: "Competition ranking at the moment:", ranking });
         } catch (error: any) {
             res.status(400).send(error.message);
         };
-    }; 
+    };
 };
