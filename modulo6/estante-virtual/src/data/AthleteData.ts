@@ -1,9 +1,9 @@
-import User from "../model/Athlete"
-import { FindByEmailResponse } from "../types/findByEmailResponse"
-import { BaseDatabase } from "./BaseDatabase"
+import User from '../model/Athlete'
+import { FindByEmailResponse } from '../types/findByEmailResponse'
+import { BaseDatabase } from './BaseDatabase'
 
 export default class AthleteData extends BaseDatabase {
-    protected TABLE_NAME = "jogos_olimpicos_athletes"
+    protected TABLE_NAME = 'jogos_olimpicos_athletes'
 
     insert = async (user: User) => {
         try {
@@ -14,7 +14,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Database error!")
+                throw new Error('Database error!')
             }
         }
     }
@@ -27,7 +27,7 @@ export default class AthleteData extends BaseDatabase {
                 .where({ name })
 
             if (!queryResult) {
-                throw new Error("Invalid name.");
+                throw new Error('Invalid name.');
             }
 
             return queryResult[0]
@@ -35,7 +35,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Database error!")
+                throw new Error('Database error!')
             }
         }
     }
@@ -52,7 +52,7 @@ export default class AthleteData extends BaseDatabase {
             if (error instanceof Error) {
                 throw new Error(error.message)
             } else {
-                throw new Error("Database error!")
+                throw new Error('Database error!')
             }
         }
     }

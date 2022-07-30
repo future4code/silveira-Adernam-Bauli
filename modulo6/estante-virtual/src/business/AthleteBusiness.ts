@@ -1,8 +1,8 @@
-import AthleteData from "../data/AthleteData";
-import Athlete from "../model/Athlete";
-import { Authenticator } from "../services/Authenticator";
-import { IdGenerator } from "../services/IdGenerator";
-import { CreateAthleteDTO } from "../types/createAthleteDTO";
+import AthleteData from '../data/AthleteData';
+import Athlete from '../model/Athlete';
+import { Authenticator } from '../services/Authenticator';
+import { IdGenerator } from '../services/IdGenerator';
+import { CreateAthleteDTO } from '../types/createAthleteDTO';
 
 export default class AthleteBusiness {
 

@@ -1,5 +1,5 @@
-import * as jwt from "jsonwebtoken"
-import { authenticationData } from "../types/authData"
+import * as jwt from 'jsonwebtoken'
+import { authenticationData } from '../types/authData'
 
 export class Authenticator {
    generateToken = (
@@ -9,7 +9,7 @@ export class Authenticator {
          payload,
          process.env.JWT_KEY as string,
          {
-            expiresIn: "24min"
+            expiresIn: '24min'
          }
       )
    }
