@@ -1,0 +1,48 @@
+# @name signup
+
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+   "email": "peter@avengers.com" ,
+   "password": "spirderspider",
+   "role": "NORMAL"
+}
+
+# "email": "adernam@123.com" ,
+# "password": "123456",
+# "role": "NORMAL"
+
+###
+# @name login
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+   "email": "adernam@123.com" ,
+   "password": "123456"
+}
+
+# "email": "peter@avengers.com",
+# "password": "spirderspider"
+
+###
+# @name userProfile
+POST http://localhost:3003/user/profile
+Content-Type: application/json
+
+{
+   "email": "adernam@123.com",
+   "password": "123456"
+}
+
+
+# @token = {{login.response.body.token}}
+
+# PUT http://localhost:3003/user/edit/
+# Content-Type: application/json
+# Authorization: {{token}}
+
+# {
+#    "name": "Peter Parker" 
+# }
