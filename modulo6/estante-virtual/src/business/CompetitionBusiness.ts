@@ -13,10 +13,9 @@ export default class CompetitionBusiness {
     private idGenerator: IdGenerator,
   ) { }
 
-  createPost = async (input: CreateCompetitionDTO): Promise<string> => {
+  createCompetition = async (input: CreateCompetitionDTO): Promise<string> => {
     const { name } = input;
 
-    try {
       if (!input) {
         throw new Error('Please check the fields!.');
       }
@@ -34,27 +33,20 @@ export default class CompetitionBusiness {
       await this.competitionData.insert(newCompetition);
 
       return id;
-    } catch (error: any) {
-      throw new Error(error.sqlMessage || error.message);
-    }
   };
 
   finishCompetition = async (competitionName: string): Promise<void> => {
-
-    try {
       if (!competitionName) {
         throw new Error('Please check the fields!.');
       };
 
       const competitionWithoutEndedDate = await this.competitionData.getCompetition(competitionName);
 
-      if(!competitionWithoutEndedDate) {
+      if(!competitionWithoutEndedDate.length) {
         throw new Error('Competition not found.');
       };
 
       const competitionAlreadyEnded = competitionWithoutEndedDate[0].ended_at;
-
-      // console.log(competitionAlreadyEnded)
 
       if(competitionAlreadyEnded) {
         throw new Error('Competition already ended.');
@@ -67,14 +59,9 @@ export default class CompetitionBusiness {
       const competitionWithNewEndedDate = await this.competitionData.getCompetition(competitionName);
 
       return competitionWithNewEndedDate[0].ended_at;
-    } catch (error: any) {
-      throw new Error(error.sqlMessage || error.message);
-    };
   };
 
   getRanking = async (competitionName: string): Promise<string> => {
-
-    try {
       if (!competitionName) {
         throw new Error('Please check the fields!.');
       };
@@ -88,8 +75,5 @@ export default class CompetitionBusiness {
       const ranking = await this.competitionData.getRanking(competitionAlreadyExist[0].id);
 
       return ranking[0];
-    } catch (error: any) {
-      throw new Error(error.sqlMessage || error.message);
-    };
   };
 }

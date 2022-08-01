@@ -23,16 +23,17 @@ export default class AthleteBusiness {
             throw new Error('Plese check the fields!.')
         };
 
-        const getCompetition = await this.competitionData.getCompetition(competition);
+        const competitionExists = await this.competitionData.getCompetition(competition);
 
-        const competitionEnded = getCompetition.ended_at;
+        const competitionEnded = competitionExists[0].ended_at;
 
         if(competitionEnded) {
-            throw new Error('Competition ended.');
+            throw new Error('Competition already ended.');
         };
 
-        const registeredUser = await this.athleteData.findByName(name)
-        if (registeredUser) {
+        const registredUser = await this.athleteData.findByName(name)
+        
+        if (registredUser) {
             throw new Error('Athlete already registred.')
         };
 

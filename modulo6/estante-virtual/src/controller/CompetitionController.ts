@@ -16,11 +16,11 @@ export default class CompetitionController {
         }
 
         try {
-            const competitionId = await this.competitionBusiness.createPost(inputCompetitionDTO);
+            const competitionId = await this.competitionBusiness.createCompetition(inputCompetitionDTO);
 
             res.status(200).send({ message: 'Competition created successfully!', competitionId });
         } catch (error: any) {
-            throw new Error(error.sqlMessage || error.message);
+            res.status(400).send(error.sqlMessage || error.message);
         };
     };
 
@@ -32,7 +32,7 @@ export default class CompetitionController {
 
             res.status(200).send({ message: 'Competition finished successfully!', finishDate})
         } catch (error: any) {
-            throw new Error(error.sqlMessage || error.message);
+            res.status(400).send(error.sqlMessage || error.message);
         };
     };
 
@@ -44,7 +44,7 @@ export default class CompetitionController {
 
             res.status(200).send({ message: 'Competition ranking at the moment:', ranking });
         } catch (error: any) {
-            throw new Error(error.sqlMessage || error.message);
+            res.status(400).send(error.sqlMessage || error.message);
         };
     };
 }
