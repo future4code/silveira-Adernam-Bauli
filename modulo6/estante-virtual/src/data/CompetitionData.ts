@@ -20,12 +20,6 @@ export default class CompetitionData extends BaseDatabase {
 
     finishCompetition = async (date: Date, competitionName: string): Promise<void> => {
         try {
-            // await this.connection.raw(`
-            //     UPDATE ${this.TABLE_NAME}
-            //     SET ended_at = ${date}
-            //     WHERE name = ${competitionName}
-            // `);
-
             await this
             .connection(this.TABLE_NAME)
             .where({ name: competitionName })

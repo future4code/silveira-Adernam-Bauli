@@ -30,7 +30,7 @@ export default class CompetitionController {
         try {
             const finishDate = await this.competitionBusiness.finishCompetition(competitionName);
 
-            res.status(200).send({ message: 'Competition finished successfully! End date:', finishDate})
+            res.status(200).send({ message: 'Competition finished successfully!', finishDate})
         } catch (error: any) {
             throw new Error(error.sqlMessage || error.message);
         };

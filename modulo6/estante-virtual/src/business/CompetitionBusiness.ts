@@ -46,13 +46,27 @@ export default class CompetitionBusiness {
         throw new Error('Please check the fields!.');
       };
 
+      const competitionWithoutEndedDate = await this.competitionData.getCompetition(competitionName);
+
+      if(!competitionWithoutEndedDate) {
+        throw new Error('Competition not found.');
+      };
+
+      const competitionAlreadyEnded = competitionWithoutEndedDate[0].ended_at;
+
+      // console.log(competitionAlreadyEnded)
+
+      if(competitionAlreadyEnded) {
+        throw new Error('Competition already ended.');
+      };
+
       const date = new Date();
 
       await this.competitionData.finishCompetition(date, competitionName);
 
-      const competition = await this.competitionData.getCompetition(competitionName);
+      const competitionWithNewEndedDate = await this.competitionData.getCompetition(competitionName);
 
-      return competition.ended_at;
+      return competitionWithNewEndedDate[0].ended_at;
     } catch (error: any) {
       throw new Error(error.sqlMessage || error.message);
     };
