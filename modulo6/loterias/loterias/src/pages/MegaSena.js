@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Logo from '../images/mega-sena-logo.png';
+import useRequestData from '../hooks/useRequestData';
 
 const Container = styled.div`
     background-color: #6BEFA3;
@@ -109,6 +110,22 @@ const Concurso = styled.div`
 
 export default function MegaSena() {
 
+    const getNumbers = async (url) => {
+        try {
+            const response = await axios.get(url);
+            return response.data.numeros;
+        } catch (error) {
+            console.log(error);
+        };
+    };
+
+    const numbers = useRequestData('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/2359');
+
+    console.log(numbers)
+
+    useEffect(() => {
+        getNumbers();
+    }, [])
 
     return (
         <Container>
@@ -121,7 +138,6 @@ export default function MegaSena() {
                 </Concurso>
             </Content>
             <Raffle>
-                {/* <Center> */}
                 <Sort>
                     <H1>
                         <h1>01</h1>
@@ -145,8 +161,7 @@ export default function MegaSena() {
                 <Footer>
                     <p>Este sorteio é meramente ilustrativo e não possui nenhuma ligação com a CAIXA.</p>
                 </Footer>
-                {/* </Center> */}
             </Raffle>
         </Container>
-    )
-}
+    );
+};
