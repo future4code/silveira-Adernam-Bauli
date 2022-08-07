@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Logo from '../images/mega-sena.png';
+import Logo from '../images/quina.png';
 
 const Container = styled.div`
-    background-color: #6BEFA3;
+    background-color: #8666EF;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -134,7 +134,7 @@ const H1 = styled.div`
     align-items: center;
 
     h1{
-        font-size: 30px;
+    font-size: 30px;
 
         @media screen and (min-width: 320px) and (max-width: 480px) {
             font-size: 15px;
@@ -193,11 +193,11 @@ const Concurso = styled.div`
 
 export default function MegaSena() {
     const navigate = useNavigate();
-    const [page,setPage] = useState('');
-    const [megaSena, setMegaSena] = useState({});
-    const date = String(megaSena.data);
+    const [page,setPage] = useState('quina');
+    const [quina, setQuina] = useState({});
+    const date = String(quina.data);
     const dateSplit = date.split('T');
-    const concurso = `${megaSena.id} - ${dateSplit[0]}`;
+    const concurso = `${quina.id} - ${dateSplit[0]}`;
 
     const getNumbers = async (url) => {
         try {
@@ -209,8 +209,8 @@ export default function MegaSena() {
     };
 
     useEffect(() => {
-        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/2359')
-            .then(setMegaSena);
+        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/5534')
+            .then(setQuina);
     }, []);
 
     useEffect(() => {
@@ -225,8 +225,8 @@ export default function MegaSena() {
         <Container>
             <Content>
                 <Select value={page} onChange={onChange}>
-                    <option value=''>MEGA-SENA</option>
                     <option value='quina'>QUINA</option>
+                    <option value=''>MEGA-SENA</option>
                     <option value='lotoFacil'>LOTOFACIL</option>
                     <option value='lotoMania'>LOTOMANIA</option>
                     <option value='timeMania'>TIMEMANIA</option>
@@ -234,7 +234,7 @@ export default function MegaSena() {
                 </Select>
                 <Logotipo>
                     <Img src={Logo} />
-                    <p><stroing>MEGA-SENA</stroing></p>
+                    <p><stroing>QUINA</stroing></p>
                 </Logotipo>
                 <Concurso>
                     <h1>Concurso</h1>
@@ -244,22 +244,19 @@ export default function MegaSena() {
             <Raffle>
                 <Sort>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[0]}</h1>
+                        <h1>{quina.numeros && quina.numeros[0]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[1]}</h1>
+                        <h1>{quina.numeros && quina.numeros[1]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[2]}</h1>
+                        <h1>{quina.numeros && quina.numeros[2]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[3]}</h1>
+                        <h1>{quina.numeros && quina.numeros[3]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[4]}</h1>
-                    </H1>
-                    <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[5]}</h1>
+                        <h1>{quina.numeros && quina.numeros[4]}</h1>
                     </H1>
                 </Sort>
                 <Footer>

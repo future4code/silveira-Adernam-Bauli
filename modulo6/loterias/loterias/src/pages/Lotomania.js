@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Logo from '../images/mega-sena.png';
+import Logo from '../images/lotomania.png';
 
 const Container = styled.div`
-    background-color: #6BEFA3;
+    background-color: #FFAB64;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -109,20 +109,21 @@ const Sort = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 48px;
+    height: 500px;
     width: 800px;
+    margin-top: 30vh;
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         height: 150px;
         width: 300px;
-        margin-top: 70px;
+        margin-top: 50px;
         gap: 10px;
-        flex-wrap: wrap;
     };
 `
 
 const H1 = styled.div`
-    margin-top: 47vh;
     text-align: center;
     height: 85px;
     width: 90px;
@@ -134,7 +135,7 @@ const H1 = styled.div`
     align-items: center;
 
     h1{
-        font-size: 30px;
+    font-size: 30px;
 
         @media screen and (min-width: 320px) and (max-width: 480px) {
             font-size: 15px;
@@ -143,8 +144,8 @@ const H1 = styled.div`
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         margin: 0;
-        height: 60px;
-        width: 60px;
+        height: 45px;
+        width: 45px;
     };
 `
 
@@ -153,13 +154,13 @@ const Footer = styled.div`
     text-align: center;
     font-size: 11px;
     font-weight: 700;
-    margin-top: 38vh;
+    margin-top: 14vh;
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         height: 50px;
         width: 250px;
         font-size: 10px;
-        margin: 20px 0;
+        margin: 30px 0;
     };
 `
 
@@ -191,13 +192,13 @@ const Concurso = styled.div`
 `
 
 
-export default function MegaSena() {
+export default function Lotomania() {
     const navigate = useNavigate();
-    const [page,setPage] = useState('');
-    const [megaSena, setMegaSena] = useState({});
-    const date = String(megaSena.data);
+    const [page,setPage] = useState('lotomania');
+    const [lotomania, setLotomania] = useState({});
+    const date = String(lotomania.data);
     const dateSplit = date.split('T');
-    const concurso = `${megaSena.id} - ${dateSplit[0]}`;
+    const concurso = `${lotomania.id} - ${dateSplit[0]}`;
 
     const getNumbers = async (url) => {
         try {
@@ -209,8 +210,8 @@ export default function MegaSena() {
     };
 
     useEffect(() => {
-        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/2359')
-            .then(setMegaSena);
+        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/2167')
+            .then(setLotomania);
     }, []);
 
     useEffect(() => {
@@ -225,16 +226,16 @@ export default function MegaSena() {
         <Container>
             <Content>
                 <Select value={page} onChange={onChange}>
+                    <option value='lotoMania'>LOTOMANIA</option>
                     <option value=''>MEGA-SENA</option>
                     <option value='quina'>QUINA</option>
                     <option value='lotoFacil'>LOTOFACIL</option>
-                    <option value='lotoMania'>LOTOMANIA</option>
                     <option value='timeMania'>TIMEMANIA</option>
                     <option value='dia-de-sorte'>DIA DE SORTE</option>
                 </Select>
                 <Logotipo>
                     <Img src={Logo} />
-                    <p><stroing>MEGA-SENA</stroing></p>
+                    <p><stroing>LOTOMANIA</stroing></p>
                 </Logotipo>
                 <Concurso>
                     <h1>Concurso</h1>
@@ -244,22 +245,64 @@ export default function MegaSena() {
             <Raffle>
                 <Sort>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[0]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[0]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[1]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[1]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[2]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[2]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[3]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[3]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[4]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[4]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[5]}</h1>
+                        <h1>{lotomania.numeros && lotomania.numeros[5]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[6]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[7]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[8]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[9]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[10]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[11]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[12]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[13]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[14]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[15]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[16]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[17]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[18]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{lotomania.numeros && lotomania.numeros[19]}</h1>
                     </H1>
                 </Sort>
                 <Footer>

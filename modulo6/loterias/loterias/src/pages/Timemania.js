@@ -5,7 +5,7 @@ import axios from 'axios';
 import Logo from '../images/mega-sena.png';
 
 const Container = styled.div`
-    background-color: #6BEFA3;
+    background-color: #5AAD7D;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -115,7 +115,7 @@ const Sort = styled.div`
     @media screen and (min-width: 320px) and (max-width: 480px) {
         height: 150px;
         width: 300px;
-        margin-top: 70px;
+        margin-top: 50px;
         gap: 10px;
         flex-wrap: wrap;
     };
@@ -124,7 +124,7 @@ const Sort = styled.div`
 const H1 = styled.div`
     margin-top: 47vh;
     text-align: center;
-    height: 85px;
+    height: 75px;
     width: 90px;
     border: 10px;
     background-color: white;
@@ -134,7 +134,7 @@ const H1 = styled.div`
     align-items: center;
 
     h1{
-        font-size: 30px;
+    font-size: 30px;
 
         @media screen and (min-width: 320px) and (max-width: 480px) {
             font-size: 15px;
@@ -143,8 +143,8 @@ const H1 = styled.div`
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         margin: 0;
-        height: 60px;
-        width: 60px;
+        height: 55px;
+        width: 55px;
     };
 `
 
@@ -159,7 +159,7 @@ const Footer = styled.div`
         height: 50px;
         width: 250px;
         font-size: 10px;
-        margin: 20px 0;
+        margin: 30px 0;
     };
 `
 
@@ -191,13 +191,13 @@ const Concurso = styled.div`
 `
 
 
-export default function MegaSena() {
+export default function Timemania() {
     const navigate = useNavigate();
-    const [page,setPage] = useState('');
-    const [megaSena, setMegaSena] = useState({});
-    const date = String(megaSena.data);
+    const [page,setPage] = useState('timemania');
+    const [timemania, setTimemania] = useState({});
+    const date = String(timemania.data);
     const dateSplit = date.split('T');
-    const concurso = `${megaSena.id} - ${dateSplit[0]}`;
+    const concurso = `${timemania.id} - ${dateSplit[0]}`;
 
     const getNumbers = async (url) => {
         try {
@@ -209,8 +209,8 @@ export default function MegaSena() {
     };
 
     useEffect(() => {
-        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/2359')
-            .then(setMegaSena);
+        getNumbers('https://brainn-api-loterias.herokuapp.com/api/v1/concursos/1622')
+            .then(setTimemania);
     }, []);
 
     useEffect(() => {
@@ -225,16 +225,16 @@ export default function MegaSena() {
         <Container>
             <Content>
                 <Select value={page} onChange={onChange}>
+                    <option value='timeMania'>TIMEMANIA</option>
                     <option value=''>MEGA-SENA</option>
                     <option value='quina'>QUINA</option>
                     <option value='lotoFacil'>LOTOFACIL</option>
                     <option value='lotoMania'>LOTOMANIA</option>
-                    <option value='timeMania'>TIMEMANIA</option>
                     <option value='dia-de-sorte'>DIA DE SORTE</option>
                 </Select>
                 <Logotipo>
                     <Img src={Logo} />
-                    <p><stroing>MEGA-SENA</stroing></p>
+                    <p><stroing>TIMEMANIA</stroing></p>
                 </Logotipo>
                 <Concurso>
                     <h1>Concurso</h1>
@@ -244,22 +244,25 @@ export default function MegaSena() {
             <Raffle>
                 <Sort>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[0]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[0]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[1]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[1]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[2]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[2]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[3]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[3]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[4]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[4]}</h1>
                     </H1>
                     <H1>
-                        <h1>{megaSena.numeros && megaSena.numeros[5]}</h1>
+                        <h1>{timemania.numeros && timemania.numeros[5]}</h1>
+                    </H1>
+                    <H1>
+                        <h1>{timemania.numeros && timemania.numeros[6]}</h1>
                     </H1>
                 </Sort>
                 <Footer>
