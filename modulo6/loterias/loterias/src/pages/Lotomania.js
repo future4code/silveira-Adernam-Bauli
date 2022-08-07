@@ -160,7 +160,7 @@ const Footer = styled.div`
         height: 50px;
         width: 250px;
         font-size: 10px;
-        margin: 30px 0;
+        margin: 65px 0;
     };
 `
 
