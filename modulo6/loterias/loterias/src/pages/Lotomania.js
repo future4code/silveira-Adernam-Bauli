@@ -113,7 +113,7 @@ const Sort = styled.div`
     gap: 48px;
     height: 500px;
     width: 800px;
-    margin-top: 30vh;
+    margin-top: 10vh;
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         height: 150px;
@@ -154,13 +154,14 @@ const Footer = styled.div`
     text-align: center;
     font-size: 11px;
     font-weight: 700;
-    margin-top: 14vh;
+    position: absolute;
+    margin-top: 90vh;
 
     @media screen and (min-width: 320px) and (max-width: 480px) {
         height: 50px;
         width: 250px;
         font-size: 10px;
-        margin: 65px 0;
+        margin-top: 39vh;
     };
 `
 
