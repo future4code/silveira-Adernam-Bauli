@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import React, { useState, useEffect} from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../constants/urls';
 import useForm from '../hooks/useForm';
 import searchLogo from '../images/search.png';
+import { GlobalStateContext } from '../context/GlobalStateContext';
 
 
 const App = styled.div`
@@ -16,6 +17,10 @@ const App = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        gap: 10px;
+    };
 `
 
 const Form = styled.div`
@@ -38,7 +43,12 @@ const Form = styled.div`
         font-size: 20px;
         font-weight: 500;
         color: white;
-    }
+    };
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        height: 120px;
+        width: 100vw;
+    };
 `
 
 const Searchbar = styled.div`
@@ -53,18 +63,18 @@ const Searchbar = styled.div`
         border: none;
         padding-left: 10px;
         font-size: 16px;
-    }
+    };
 
     img{
         background-color: #FF6C00;
         height: 22px;
         border-radius: 20px;
         padding: 5px;
-    }
+    };
 
     img:hover{
         background-color: #ea6709;
-    }
+    };
 `
 
 const UserContainer = styled.div`
@@ -72,6 +82,7 @@ const UserContainer = styled.div`
     height: 500px;
     width: 500px;
     border-radius: 10px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,18 +94,23 @@ const UserContainer = styled.div`
         border-radius: 50%;
         border: 10px solid white;
         margin-top: 30px;
-    }
+    };
 
     h2{
         margin: 15px 0 10px 0;
         color: #444;
-    }
+    };
 
     p{
         margin: 0 0 30px 0;
         color: #444;
         font-weight: 500;
-    }
+        height: 20px;
+    };
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        width: 100vw;
+    };
 `
 
 const UserDetails = styled.div`
@@ -104,6 +120,10 @@ const UserDetails = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        margin-top: 8px;
+    };
 `
 
 const Detail = styled.div`
@@ -116,18 +136,18 @@ const Detail = styled.div`
 
     :hover{
         background-color: #767477;
-    }
+    };
 
     h1{
         font-size: 29px;
         margin: 0;
-    }
+    };
 
     p{
         font-size: 15px;
         font-weight: 700;
         margin: 0;
-    }
+    };
 `
 
 const Button = styled.button`
@@ -141,28 +161,32 @@ const Button = styled.button`
 
     :hover{
         background-color: #525153;
-    }
+    };
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        margin: 460px 0 0 60vw;
+    };
 `
 
 function HomePage() {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState({});
+    const { states, setters } = useContext(GlobalStateContext);
     const { form, onChange } = useForm({ username: '' });
     let history = [];
 
     const updateLocalStorage = () => {
         if (localStorage.history) {
-            history = JSON.parse(localStorage.getItem('history'))
-        }
+            history = JSON.parse(localStorage.getItem('history'));
+        };
 
         const newHistory = form.username;
-        history.push(newHistory);
+        history.unshift(newHistory);
         localStorage.setItem('history', JSON.stringify(history));
     };
 
     const onSubmit = () => {
         getUserData(`${BASE_URL}/users/${form.username}`)
-            .then(setUserData);
+            .then(setters.setCurrentUser);
         updateLocalStorage();
         form.username = '';
     };
@@ -186,29 +210,29 @@ function HomePage() {
                     <img src={searchLogo} onClick={() => onSubmit(form.username)} />
                 </Searchbar>
             </Form>
-            {userData.data?.name ?
+            {states.currentUser.data?.name ?
                 <UserContainer>
-                    <img src={userData.data?.avatar_url} />
-                    <h2>{userData.data?.name}</h2>
-                    <p>{userData.data?.login}</p>
-                    <p>{userData.data?.bio}</p>
+                    <img src={states.currentUser.data?.avatar_url} />
+                    <h2>{states.currentUser.data?.name}</h2>
+                    <p>{states.currentUser.data?.login}</p>
+                    <p>{states.currentUser.data?.bio}</p>
                     <UserDetails>
                         <Detail>
-                            <h1>{userData.data.public_repos}</h1>
+                            <h1>{states.currentUser.data.public_repos}</h1>
                             <p>Repositories</p>
                         </Detail>
                         <Detail>
-                            <h1>{userData.data.followers}</h1>
+                            <h1>{states.currentUser.data.followers}</h1>
                             <p>Followers</p>
                         </Detail>
                         <Detail>
-                            <h1>{userData.data.following}</h1>
+                            <h1>{states.currentUser.data.following}</h1>
                             <p>Following</p>
                         </Detail>
                     </UserDetails>
                     <Button onClick={() => navigate('/history')}>View search history</Button>
                 </UserContainer>
-            : undefined}
+                : undefined}
         </App>
     );
 };

@@ -1,5 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { BASE_URL } from '../constants/urls';
+import { useContext } from 'react';
+import { GlobalStateContext } from "../context/GlobalStateContext";
 
 const App = styled.div`
     background-color: #333233;
@@ -21,6 +25,11 @@ const Section = styled.section`
     flex-direction: column;
     align-items: center;
     border-bottom: 12px solid #FF7A00;
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        height: 90vh;
+        width: 99vw;
+    };
 `
 
 const Title = styled.h1`
@@ -33,36 +42,42 @@ const Title = styled.h1`
     height: 30px;
 `
 
-const ListOfReposContainer = styled.div`
-    height: 500px;
-    width: 96%;
+const HistoryList = styled.div`
+    height: 89%;
+    width: 95%;
     padding: 10px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        margin-right: 20px;
+    };
 `
 
-const Name = styled.h2`
+const Name = styled.div`
     width: 95%;
     border-radius: 5px;
     margin-bottom: 10px;
     text-align: center;
+    padding-left: 20px;
+
+    :hover{
+        background-color: #767477;
+        cursor: pointer;
+    };
 
     h2{
         font-size: 15px;
         width: 100%;
         overflow: hidden;
         color: #444;
-    }
+    };
 
-    p{
-        font-size: 12px;
-        font-weight: 400;
-        color: #777;
-        width: 100%;
-        height: 30px;
-        overflow: hidden;
-        line-height: 1.3;
-        margin-top: 10px;
-    }
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        width: 90%;
+        padding-left: 25px;
+    };
 `
 
 const ButtonBack = styled.button`
@@ -76,7 +91,11 @@ const ButtonBack = styled.button`
 
     :hover{
         background-color: #525153;
-    }
+    };
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        margin: 13px 260px 0 0;
+    };
 `
 
 const ButtonClear = styled.button`
@@ -90,17 +109,38 @@ const ButtonClear = styled.button`
 
     :hover{
         background-color: #525153;
-    }
+    };
+
+    @media screen and (min-width: 320px) and (max-width: 480px) {
+        margin: 13px 0 0 260px;
+    };
 `
 
 const ReposContainer = () => {
     const navigate = useNavigate();
     const history = JSON.parse(localStorage.getItem('history'));
+    const { setters } = useContext(GlobalStateContext);
 
     const clearStorage = () => {
         localStorage.clear();
         window.location.reload();
-    }
+    };
+
+    const onClickUser = (user) => {
+        getUserData(`${BASE_URL}/users/${user}`)
+            .then(setters.setCurrentUser);
+        navigate('/');
+    };
+
+    const getUserData = async (url) => {
+        try {
+            const result = await axios.get(url);
+            return result;
+        } catch (error) {
+            alert('User not found.');
+            window.location.reload();
+        };
+    };
 
     return (
         <App>
@@ -108,11 +148,11 @@ const ReposContainer = () => {
                 <ButtonBack onClick={() => navigate('/')}>Back to Home</ButtonBack>
                 <ButtonClear onClick={clearStorage}>Clear history</ButtonClear>
                 <Title>History</Title>
-                <ListOfReposContainer>
-                    {history?.map(user => (<Name key={user}><h2>{user}</h2>
+                <HistoryList>
+                    {history?.map((user, index) => (<Name onClick={() => onClickUser(user)} key={index}><h2>{user}</h2>
                     </Name>
                     ))}
-                </ListOfReposContainer>
+                </HistoryList>
             </Section>
         </App>
     );
