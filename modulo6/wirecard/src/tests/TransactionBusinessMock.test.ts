@@ -1,4 +1,4 @@
-import TransactionBusiness from '../src/business/TransactionBusiness';
+import TransactionBusiness from '../business/TransactionBusiness';
 import { IdGeneratorMock } from './mocks/idGeneratorMock';
 import { TransactionDataMock } from './mocks/TrasactionDataMock';
 

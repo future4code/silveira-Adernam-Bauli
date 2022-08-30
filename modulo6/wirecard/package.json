@@ -2,7 +2,7 @@
     "scripts": {
         "test": "clear && echo \"Running tests...\" && jest",
         "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/controller/index.ts",
-        "start": "tsc && node ./build/controller/index.js",
+        "start": "node ./build/controller/index.js",
         "postinstall": "tsc"
     },
     "engines": {

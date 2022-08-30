@@ -1,6 +1,6 @@
-import TransactionData from '../../src/data/TransactionData';
-import Transaction from '../../src/model/Transaction'
-import { transactionMock } from './TransactionMock'
+import TransactionData from '../../data/TransactionData';
+import Transaction from '../../model/Transaction';
+import { transactionMock } from './TransactionMock';
 
 export class TransactionDataMock extends TransactionData {
 

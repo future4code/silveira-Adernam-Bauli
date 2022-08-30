@@ -1,4 +1,4 @@
-import Transaction from '../../src/model/Transaction';
+import Transaction from '../../model/Transaction';
 
 export const transactionMock = new Transaction(
     'customer_id1',
