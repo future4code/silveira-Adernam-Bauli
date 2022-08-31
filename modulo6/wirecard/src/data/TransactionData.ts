@@ -26,7 +26,7 @@ export default class TransactionData extends BaseDatabase {
                 .where({
                     customer_cpf: cpf,
                     amount
-                })
+                });
 
             return result;
         } catch (error) {
